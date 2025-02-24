@@ -84,6 +84,7 @@ export interface Database {
           id: number
           next_event_id: number | null
           previous_event_id: number | null
+          event_type_id: number
           publisher_id: number
           release_year: number
           slug: string
@@ -95,6 +96,7 @@ export interface Database {
           id?: number
           next_event_id?: number | null
           previous_event_id?: number | null
+          event_type_id?: number
           publisher_id: number
           release_year: number
           slug: string
@@ -106,6 +108,7 @@ export interface Database {
           id?: number
           next_event_id?: number | null
           previous_event_id?: number | null
+          event_type_id?: number
           publisher_id?: number
           release_year?: number
           slug?: string
@@ -128,6 +131,12 @@ export interface Database {
             foreignKeyName: "events_publisher_id_fkey"
             columns: ["publisher_id"]
             referencedRelation: "publishers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "events_event_type_id_fkey"
+            columns: ["event_type_id"]
+            referencedRelation: "event_types"
             referencedColumns: ["id"]
           },
         ]
