@@ -8,7 +8,8 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const event = await getEventBySlug(params.slug).catch(() => null)
+  const { slug } = await params
+  const event = await getEventBySlug(slug).catch(() => null)
   if (!event) return { title: "Not Found" }
 
   return {
@@ -18,9 +19,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params }: PageProps) {
-  console.log("Fetching event data for slug:", params.slug)
+  const { slug } = await params
+  console.log("Fetching event data for slug:", slug)
 
-  const event = await getEventBySlug(params.slug).catch(() => null)
+  const event = await getEventBySlug(slug).catch(() => null)
   if (!event) notFound()
 
   console.log("Fetching collections for event:", event.id)
