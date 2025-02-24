@@ -242,6 +242,27 @@ export interface Database {
         }
         Relationships: []
       }
+      event_types: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          description: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          description: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          description?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
