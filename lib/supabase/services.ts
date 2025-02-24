@@ -4,7 +4,7 @@ export async function getEvents() {
   try {
     console.log("Fetching visible events from Supabase...")
 
-    const { data, error, status } = await supabase
+    const { data: events, error: eventsError } = await supabase
       .from("events")
       .select(`
         *,
@@ -16,20 +16,53 @@ export async function getEvents() {
       .eq("is_visible", true)
       .order("release_year", { ascending: false })
 
-    console.log("Supabase response status:", status)
+    if (eventsError) throw eventsError
 
-    if (error) {
-      console.error("Supabase error:", error)
-      throw new Error(`Failed to fetch events: ${error.message}`)
-    }
+    // Fetch main characters for each event
+    const { data: eventCharacters, error: charactersError } = await supabase
+      .from("event_characters")
+      .select(`
+        event_id,
+        character:characters(*)
+      `)
+      .in("event_id", events?.map((e) => e.id) ?? [])
 
-    if (!data) {
-      console.log("No data returned from Supabase")
-      return []
-    }
+    if (charactersError) throw charactersError
 
-    console.log("Successfully fetched events:", data.length)
-    return data
+    // Fetch reading times from the view
+    const { data: readingTimes, error: readingError } = await supabase
+      .from("event_reading_times")
+      .select("*")
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (readingError) throw readingError
+
+    // Fetch issue counts from the view
+    const { data: issueCounts, error: countsError } = await supabase
+      .from("event_issue_counts")
+      .select("*")
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (countsError) throw countsError
+
+    // Combine all the data
+    const enrichedEvents = events?.map((event) => {
+      const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
+      const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
+      const counts = issueCounts?.find((ic) => ic.event_id === event.id)
+
+      return {
+        ...event,
+        main_characters: characters ?? [],
+        reading_time: readingTime ?? 0,
+        issue_counts: {
+          core: counts?.core_count ?? 0,
+          tie_in: counts?.tie_in_count ?? 0,
+        },
+      }
+    })
+
+    return enrichedEvents ?? []
   } catch (error) {
     console.error("Error in getEvents:", error)
     throw error
