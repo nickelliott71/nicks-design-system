@@ -5,7 +5,7 @@ import ReadingOrderPage from "./client-page"
 
 interface PageProps {
   params: {
-    slug: string
+    params: Promise<{ slug: string }>
   }
 }
 
