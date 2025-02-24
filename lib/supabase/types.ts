@@ -28,6 +28,7 @@ export interface Event {
   description: string
   publisher_id: number
   release_year: number
+  event_type_id: number | null
   previous_event_id: number | null
   next_event_id: number | null
   created_at: string
