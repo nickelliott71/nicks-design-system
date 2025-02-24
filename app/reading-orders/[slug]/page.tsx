@@ -3,12 +3,6 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
 
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
-
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const event = await getEventBySlug(params.slug).catch(() => null)
   if (!event) return { title: "Not Found" }
