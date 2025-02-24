@@ -3,8 +3,13 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const event = await getEventBySlug(params.slug).catch(() => null)
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const event = await getEventBySlug(slug).catch(() => null)
   if (!event) return { title: "Not Found" }
 
   return {
@@ -13,10 +18,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  console.log("Fetching event data for slug:", params.slug)
+export default async function Page({ params }: PageProps) {
 
-  const event = await getEventBySlug(params.slug).catch(() => null)
+  const { slug } = await params
+  console.log("Fetching event data for slug:", slug)
+  const event = await getEventBySlug(slug).catch(() => null)
   if (!event) notFound()
 
   console.log("Fetching issues for event:", event.id)
@@ -25,4 +31,3 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return <ReadingOrderPage event={event} issues={issues} />
 }
-
