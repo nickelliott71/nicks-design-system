@@ -9,7 +9,7 @@ interface PageProps {
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const event = await getEventBySlug(params.slug).catch(() => null)
   if (!event) return { title: "Not Found" }
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { slug: string } }) {
   console.log("Fetching event data for slug:", params.slug)
 
   const event = await getEventBySlug(params.slug).catch(() => null)
