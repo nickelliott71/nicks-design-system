@@ -1,6 +1,6 @@
 import { supabase } from "./client"
 
-export async function getEvents(): Promise<Event[]> {
+export async function getEvents() {
   try {
     console.log("Fetching visible events from Supabase...")
 
