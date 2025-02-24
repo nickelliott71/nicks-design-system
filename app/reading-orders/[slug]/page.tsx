@@ -4,7 +4,9 @@ import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
 
 interface PageProps {
-  params: Promise<{ slug: string }>
+  params: {
+    slug: string
+  }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
