@@ -30,7 +30,7 @@ export interface Event {
   release_year: number
   previous_event_id: number | null
   next_event_id: number | null
-  event_type_id: number
+  event_type_id?: number
   created_at: string
   publisher?: Publisher
   event_type?: EventType
