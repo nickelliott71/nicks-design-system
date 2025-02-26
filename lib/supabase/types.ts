@@ -54,9 +54,9 @@ export interface Event {
 }
 
 export interface EventCharacter {
-  id: number;
-  event_id: number;
-  character_id: number;
+  id: number
+  event_id: number
+  character_id: number
 }
 
 export interface Collection {

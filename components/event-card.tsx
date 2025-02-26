@@ -14,6 +14,8 @@ interface EventCardProps {
 }
 
 export function EventCard({ event, variant = "grid" }: EventCardProps) {
+
+  console.log(event);
   return (
     <Card className="overflow-hidden">
       <div className={variant === "timeline" ? "lg:flex" : "md:flex"}>
