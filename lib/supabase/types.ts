@@ -86,7 +86,7 @@ export interface Issue {
   importance: string
   collection_id: number | null
   created_at: string
-  collection?: Collection
+  collection?: Collection | null
   purchase_options?: IssuePurchaseOption[]
 }
 
