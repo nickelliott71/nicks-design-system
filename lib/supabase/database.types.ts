@@ -371,7 +371,22 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      event_reading_times: {
+        Row: {
+          event_id: number
+          reading_hours: number
+        }
+        Relationships: []
+      }
+      event_issue_counts: {
+        Row: {
+          event_id: number
+          core_count: number
+          tie_in__count: number
+          lead_in_count: number
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
