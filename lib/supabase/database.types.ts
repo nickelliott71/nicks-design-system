@@ -382,7 +382,7 @@ export interface Database {
         Row: {
           event_id: number
           core_count: number
-          tie_in__count: number
+          tie_in_count: number
           lead_in_count: number
         }
         Relationships: []
