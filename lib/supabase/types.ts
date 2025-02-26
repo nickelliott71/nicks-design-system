@@ -45,7 +45,7 @@ export interface Event {
   event_type?: EventType
   previous_event?: Event| null
   next_event?: Event| null
-  main_characters?: Character[]
+  main_characters?: EventCharacter[]
   reading_time?: number
   issue_counts?: {
     core: number
