@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { getAmazonUrl } from "@/lib/constants"
-import type { CollectionEdition, IssuePurchaseOption } from "@/lib/supabase/types"
+import type { CollectionPurchaseOption, IssuePurchaseOption } from "@/lib/supabase/types"
 
 interface PurchaseButtonProps {
-  options: CollectionEdition[] | IssuePurchaseOption[]
+  options: CollectionPurchaseOption[] | IssuePurchaseOption[]
   className?: string
 }
 
@@ -26,10 +26,10 @@ export function PurchaseButton({ options, className }: PurchaseButtonProps) {
               window.open(getAmazonUrl(option.asin), "_blank")
             }}
           >
-            {"format" in option
-              ? option.format === "digital"
+            {"format" in option && typeof option.format === "object" && "name" in option.format
+              ? option.format.name === "digital"
                 ? "Digital Edition"
-                : option.format.charAt(0).toUpperCase() + option.format.slice(1)
+                : option.format.name.charAt(0).toUpperCase() + option.format.name.slice(1)
               : "Purchase"}
           </DropdownMenuItem>
         ))}

@@ -1,5 +1,4 @@
 export type IssueType = "core" | "tie-in"
-export type FormatType = "hardcover" | "paperback" | "digital"
 
 export interface Publisher {
   id: number
@@ -16,6 +15,12 @@ export interface EventType {
 }
 
 export interface Character {
+  id: number
+  name: string
+  created_at: string
+}
+
+export interface Format {
   id: number
   name: string
   created_at: string
@@ -53,13 +58,14 @@ export interface Collection {
   pages: number
   release_date: string
   created_at: string
-  editions?: CollectionEdition[]
+  editions?: CollectionPurchaseOption[]
 }
 
-export interface CollectionEdition {
+export interface CollectionPurchaseOption {
   id: number
   collection_id: number
-  format: FormatType
+  format_id: number
+  format: Format
   isbn: string
   asin: string
   created_at: string
@@ -82,7 +88,8 @@ export interface Issue {
 export interface IssuePurchaseOption {
   id: number
   issue_id: number
-  format: FormatType
+  format_id: number
+  format: Format
   asin: string
   created_at: string
 }

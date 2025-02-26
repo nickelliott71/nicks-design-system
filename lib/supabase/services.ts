@@ -181,7 +181,7 @@ export async function getEventIssues(eventId: number) {
       .select(`
         *,
         collection:collections(*),
-        purchase_options:issue_purchase_options(*)
+        purchase_options:issue_purchase_options(*, format:formats(*))
       `)
       .eq("event_id", eventId)
       .order("date", { ascending: true })
@@ -214,7 +214,7 @@ export async function getEventCollections(eventId: number) {
       .from("collections")
       .select(`
         *,
-        editions:collection_editions(*)
+        editions:collection_purchase_options(*, format:formats(*))
       `)
       .eq("event_id", eventId)
       .order("release_date", { ascending: true })
@@ -232,6 +232,7 @@ export async function getEventCollections(eventId: number) {
     }
 
     console.log("Successfully fetched collections:", data.length)
+    console.log(data);
     return data
   } catch (error) {
     console.error("Error in getEventCollections:", error)

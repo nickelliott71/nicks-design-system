@@ -3,12 +3,12 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      collection_editions: {
+      collection_purchase_options: {
         Row: {
           asin: string
           collection_id: number
           created_at: string
-          format: string
+          format_id: number
           id: number
           isbn: string
         }
@@ -16,7 +16,7 @@ export interface Database {
           asin: string
           collection_id: number
           created_at?: string
-          format: string
+          format_id: number
           id?: number
           isbn: string
         }
@@ -24,15 +24,21 @@ export interface Database {
           asin?: string
           collection_id?: number
           created_at?: string
-          format?: string
+          format_id?: number
           id?: number
           isbn?: string
         }
         Relationships: [
           {
-            foreignKeyName: "collection_editions_collection_id_fkey"
+            foreignKeyName: "collection_purchase_options_collection_id_fkey"
             columns: ["collection_id"]
             referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_purchase_options_format_id_fkey"
+            columns: ["format_id"]
+            referencedRelation: "formats"
             referencedColumns: ["id"]
           },
         ]
@@ -96,7 +102,7 @@ export interface Database {
           id?: number
           next_event_id?: number | null
           previous_event_id?: number | null
-          event_type_id?: number
+          event_type_id: number
           publisher_id: number
           release_year: number
           slug: string
@@ -145,21 +151,21 @@ export interface Database {
         Row: {
           asin: string
           created_at: string
-          format: string
+          format_id: number
           id: number
           issue_id: number
         }
         Insert: {
           asin: string
           created_at?: string
-          format: string
+          format_id: number
           id?: number
           issue_id: number
         }
         Update: {
           asin?: string
           created_at?: string
-          format?: string
+          format_id?: number
           id?: number
           issue_id?: number
         }
@@ -168,6 +174,12 @@ export interface Database {
             foreignKeyName: "issue_purchase_options_issue_id_fkey"
             columns: ["issue_id"]
             referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "issue_purchase_options_format_id_fkey"
+            columns: ["format_id"]
+            referencedRelation: "formats"
             referencedColumns: ["id"]
           },
         ]
@@ -239,6 +251,24 @@ export interface Database {
           id?: number
           name?: string
           slug?: string
+        }
+        Relationships: []
+      }
+      formats: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
         }
         Relationships: []
       }
