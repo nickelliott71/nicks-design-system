@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PurchaseButton } from "@/components/purchase-button"
 import { formatDate } from "@/lib/utils"
-import type { Event, Issue } from "@/lib/supabase/types"
+import type { Event, Issue, IssueType } from "@/lib/supabase/types"
 
 interface ReadingOrderPageProps {
   event: Event
@@ -19,11 +19,11 @@ interface ReadingOrderPageProps {
 }
 
 export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
-  const [filter, setFilter] = useState<"all" | "core" | "tie-in">("all")
+  const [filter, setFilter] = useState<IssueType>("all")
 
   const filteredIssues = issues.filter((issue) => {
     if (filter === "all") return true
-    return issue.type === filter
+    return issue.type.name === filter
   })
 
   return (
@@ -36,11 +36,14 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
 
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="flex flex-wrap gap-2">
+            <Badge className="text-lg" variant="outline">
+              {issues.filter((i) => i.type.name === "lead-in").length} Lead-ins
+            </Badge>
             <Badge className="text-lg" variant="secondary">
-              {issues.filter((i) => i.type === "core").length} Core Issues
+              {issues.filter((i) => i.type.name === "core").length} Core Issues
             </Badge>
             <Badge className="text-lg" variant="outline">
-              {issues.filter((i) => i.type === "tie-in").length} Tie-ins
+              {issues.filter((i) => i.type.name === "tie-in").length} Tie-ins
             </Badge>
           </div>
 
@@ -70,6 +73,9 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
           </Button>
           <Button variant={filter === "core" ? "default" : "outline"} onClick={() => setFilter("core")}>
             Core Story
+          </Button>
+          <Button variant={filter === "lead-in" ? "default" : "outline"} onClick={() => setFilter("lead-in")}>
+            Lead-ins
           </Button>
           <Button variant={filter === "tie-in" ? "default" : "outline"} onClick={() => setFilter("tie-in")}>
             Tie-ins
@@ -107,9 +113,9 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                       </div>
                       <p className="text-muted-foreground">{issue.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        <Badge variant={issue.type === "core" ? "default" : "secondary"}>
-                          {issue.type === "core" ? "Core Issue" : "Tie-in"}
-                        </Badge>
+                      <Badge variant={issue.type.name === "core" ? "default" : "secondary"}>
+                        {issue.type.name === "core" ? "Core Issue" : issue.type.name === "tie-in" ? "Tie-in" : "Lead-in"}
+                      </Badge>
                         <Badge variant="outline">{formatDate(issue.date)}</Badge>
                       </div>
 
