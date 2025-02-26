@@ -1,5 +1,3 @@
-export type IssueType = "core" | "tie-in"
-
 export interface Publisher {
   id: number
   name: string
@@ -21,6 +19,12 @@ export interface Character {
 }
 
 export interface Format {
+  id: number
+  name: string
+  created_at: string
+}
+
+export interface IssueType {
   id: number
   name: string
   created_at: string
@@ -77,6 +81,7 @@ export interface Issue {
   title: string
   description: string
   date: string
+  type_id: number
   type: IssueType
   importance: string
   collection_id: number | null

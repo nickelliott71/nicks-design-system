@@ -181,6 +181,7 @@ export async function getEventIssues(eventId: number) {
       .select(`
         *,
         collection:collections(*),
+        type:issue_types(*),
         purchase_options:issue_purchase_options(*, format:formats(*))
       `)
       .eq("event_id", eventId)

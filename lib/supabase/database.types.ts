@@ -194,7 +194,7 @@ export interface Database {
           id: number
           importance: string
           title: string
-          type: string
+          type_id: number
         }
         Insert: {
           collection_id?: number | null
@@ -205,7 +205,7 @@ export interface Database {
           id?: number
           importance: string
           title: string
-          type: string
+          type_id: number
         }
         Update: {
           collection_id?: number | null
@@ -216,7 +216,7 @@ export interface Database {
           id?: number
           importance?: string
           title?: string
-          type?: string
+          type_id?: number
         }
         Relationships: [
           {
@@ -229,6 +229,12 @@ export interface Database {
             foreignKeyName: "issues_event_id_fkey"
             columns: ["event_id"]
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "issues_type_id_fkey"
+            columns: ["type_id"]
+            referencedRelation: "issue_types"
             referencedColumns: ["id"]
           },
         ]
@@ -255,6 +261,24 @@ export interface Database {
         Relationships: []
       }
       formats: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      issue_types: {
         Row: {
           created_at: string
           id: number
