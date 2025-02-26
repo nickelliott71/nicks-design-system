@@ -146,8 +146,9 @@ export async function getEventBySlug(slug: string) {
       .select(`
         *,
         publisher:publishers(*),
+        event_type:event_types(*),
         previous_event:events!previous_event_id(*),
-        next_event:events!next_event_id(*),
+        next_event:events!next_event_id(*)
       `)
       .eq("slug", slug)
       .single()
