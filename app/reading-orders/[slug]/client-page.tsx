@@ -11,7 +11,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PurchaseButton } from "@/components/purchase-button"
 import { formatDate } from "@/lib/utils"
-import type { Event, Issue, IssueType } from "@/lib/supabase/types"
+import type { Event, Issue } from "@/lib/supabase/types"
+
+type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
 interface ReadingOrderPageProps {
   event: Event
