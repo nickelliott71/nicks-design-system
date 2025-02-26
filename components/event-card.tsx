@@ -76,7 +76,9 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
                   <div>
                     <div className="font-semibold">Event Type</div>
                     <div className="text-muted-foreground">
-                      {event.event_type?.name.charAt(0).toUpperCase() + event.event_type?.name.slice(1)}
+                      {event.event_type?.name
+                        ? event.event_type.name.charAt(0).toUpperCase() + event.event_type.name.slice(1)
+                        : "Unknown"}
                     </div>
                   </div>
                 </div>
