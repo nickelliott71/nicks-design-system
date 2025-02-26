@@ -317,6 +317,40 @@ export interface Database {
         }
         Relationships: []
       }
+      event_characters: {
+        Row: {
+          created_at: string
+          id: number
+          event_id: number
+          character_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          event_id: number
+          character_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          event_id?: number
+          character_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_characters_event_id_fkey"
+            columns: ["event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_characters_character_id_fkey"
+            columns: ["character_id"]
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
