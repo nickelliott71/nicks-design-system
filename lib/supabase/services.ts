@@ -142,12 +142,28 @@ export async function getEventBySlug(slug: string) {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*),
-        previous_event:events!previous_event_id(*),
-        next_event:events!next_event_id(*)
+        event_type:event_types(*)
       `)
       .eq("slug", slug)
       .single()
+
+      const previousEvent = await supabase
+        .from("events")
+        .select("*")
+        .eq("id", data.previous_event_id)
+        .single();
+
+      const nextEvent = await supabase
+        .from("events")
+        .select("*")
+        .eq("id", data.next_event_id)
+        .single();
+
+    console.log("Prev event", previousEvent);
+    console.log("Next event", nextEvent);
+    
+    data.previous_event = previousEvent.data;
+    data.next_event = nextEvent.data;
 
     console.log("Supabase response status:", status)
     console.log("Fetched event data:", data)
@@ -162,15 +178,8 @@ export async function getEventBySlug(slug: string) {
       return null
     }
 
-    // Ensure previous_event and next_event are single objects
-    const event = {
-      ...data,
-      previous_event: Array.isArray(data.previous_event) ? data.previous_event[0] : data.previous_event,
-      next_event: Array.isArray(data.next_event) ? data.next_event[0] : data.next_event,
-    }
-
-    console.log("Successfully fetched event:", event.title)
-    return event
+    console.log("Successfully fetched event:", data.title)
+    return data
   } catch (error) {
     console.error("Error in getEventBySlug:", error)
     throw error
