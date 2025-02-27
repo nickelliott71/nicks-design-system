@@ -63,14 +63,14 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
               <Link href={`/reading-orders/${event.previous_event.slug}`}>
                 <Button variant="outline" size="sm">
                   <ChevronLeft className="mr-1 h-4 w-4" />
-                  Previous: {event.previous_event[0].title}
+                  Previous: {event.previous_event.title}
                 </Button>
               </Link>
             )}
             {event.next_event && (
               <Link href={`/reading-orders/${event.next_event.slug}`}>
                 <Button variant="outline" size="sm">
-                  Next: {event.next_event[0].title}
+                  Next: {event.next_event.title}
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>

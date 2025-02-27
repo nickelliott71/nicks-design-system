@@ -43,8 +43,8 @@ export interface Event {
   created_at: string
   publisher?: Publisher
   event_type?: EventType
-  previous_event?: Event[] | null
-  next_event?: Event[] | null
+  previous_event?: Event | null
+  next_event?: Event | null
   main_characters?: Character[]
   reading_time?: number
   issue_counts?: {

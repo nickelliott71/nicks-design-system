@@ -10,8 +10,8 @@ export async function getEvents() {
         *,
         publisher:publishers(*),
         event_type:event_types(*),
-        previous_event:events!previous_event_id(*),
-        next_event:events!next_event_id(*)
+        previous_event:previous_event_id(*),
+        next_event:next_event_id(*)
       `)
       .eq("is_visible", true)
       .order("release_year", { ascending: false })
@@ -79,8 +79,8 @@ export async function getEventsForTimeline() {
         *,
         publisher:publishers(*),
         event_type:event_types(*),
-        previous_event:events!previous_event_id(*),
-        next_event:events!next_event_id(*)
+        previous_event:previous_event_id(*),
+        next_event:next_event_id(*)
       `)
       .order("release_year", { ascending: false })
 
@@ -147,8 +147,8 @@ export async function getEventBySlug(slug: string) {
         *,
         publisher:publishers(*),
         event_type:event_types(*),
-        previous_event:events!previous_event_id(*),
-        next_event:events!next_event_id(*)
+        previous_event:previous_event_id(*),
+        next_event:next_event_id(*)
       `)
       .eq("slug", slug)
       .single()
