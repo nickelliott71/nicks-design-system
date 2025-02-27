@@ -147,17 +147,17 @@ export async function getEventBySlug(slug: string) {
       .eq("slug", slug)
       .single()
 
-      if (error) {
-        console.error("Supabase error:", error)
-        throw new Error(`Failed to fetch event with slug ${slug}: ${error.message}`)
-      }
-  
-      if (!data) {
-        console.log("No event found with slug:", slug)
-        return null
-      }
+    if (error) {
+      console.error("Supabase error:", error)
+      throw new Error(`Failed to fetch event with slug ${slug}: ${error.message}`)
+    }
 
-      const previousEvent = data.previous_event_id
+    if (!data) {
+      console.log("No event found with slug:", slug)
+      return null
+    }
+
+    const previousEvent = data.previous_event_id
       ? await supabase
           .from("events")
           .select("*")
@@ -165,7 +165,7 @@ export async function getEventBySlug(slug: string) {
           .single()
       : null
 
-      const nextEvent = data.next_event_id
+    const nextEvent = data.next_event_id
       ? await supabase
           .from("events")
           .select("*")
@@ -173,14 +173,17 @@ export async function getEventBySlug(slug: string) {
           .single()
       : null
 
-    data.previous_event = previousEvent?.data || null;
-    data.next_event = nextEvent?.data || null;
+    const event = {
+      ...data,
+      previous_event: previousEvent?.data || null,
+      next_event: nextEvent?.data || null,
+    }
 
     console.log("Supabase response status:", status)
-    console.log("Fetched event data:", data)
+    console.log("Fetched event data:", event)
 
-    console.log("Successfully fetched event:", data.title)
-    return data
+    console.log("Successfully fetched event:", event.title)
+    return event
   } catch (error) {
     console.error("Error in getEventBySlug:", error)
     throw error
