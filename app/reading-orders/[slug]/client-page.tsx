@@ -28,73 +28,62 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
     return issue.type.name === filter
   })
 
+  console.log(event);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="lex flex-col bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold">{event.title} Reading Order</h1>
           <p className="mt-4 text-xl text-muted-foreground">{event.description}</p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <div className="flex flex-wrap gap-2">
-            <Badge className="text-lg" variant="outline">
-              {issues.filter((i) => i.type.name === "lead-in").length} Lead-ins
-            </Badge>
-            <Badge className="text-lg" variant="secondary">
-              {issues.filter((i) => i.type.name === "core").length} Core Issues
-            </Badge>
-            <Badge className="text-lg" variant="outline">
-              {issues.filter((i) => i.type.name === "tie-in").length} Tie-ins
-            </Badge>
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="mb-6 flex flex-wrap gap-2">
+            <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")}>
+              All Issues ({issues.length})
+            </Button>
+            <Button variant={filter === "core" ? "default" : "outline"} onClick={() => setFilter("core")}>
+              Core Story ({issues.filter((i) => i.type.name === "core").length})
+            </Button>
+            <Button variant={filter === "lead-in" ? "default" : "outline"} onClick={() => setFilter("lead-in")}>
+              Lead-ins ({issues.filter((i) => i.type.name === "lead-in").length})
+            </Button>
+            <Button variant={filter === "tie-in" ? "default" : "outline"} onClick={() => setFilter("tie-in")}>
+              Tie-ins ({issues.filter((i) => i.type.name === "tie-in").length})
+            </Button>
+            <Link href={`/reading-orders/${event.slug}/collected-editions`}>
+              <Button variant="ghost">
+                <Library className="mr-2 h-4 w-4" />
+                Collected Editions
+              </Button>
+            </Link>
           </div>
-
-          <div className="flex gap-4">
+          <div className="flex mb-6 gap-4">
             {event.previous_event && (
               <Link href={`/reading-orders/${event.previous_event.slug}`}>
                 <Button variant="outline" size="sm">
-                  <ChevronLeft className="mr-2 h-4 w-4" />
-                  {event.previous_event.title}
+                  <ChevronLeft className="mr-1 h-4 w-4" />
+                  Previous: {event.previous_event[0].title}
                 </Button>
               </Link>
             )}
             {event.next_event && (
               <Link href={`/reading-orders/${event.next_event.slug}`}>
                 <Button variant="outline" size="sm">
-                  {event.next_event.title}
-                  <ChevronRight className="ml-2 h-4 w-4" />
+                  Next: {event.next_event[0].title}
+                  <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
             )}
           </div>
         </div>
 
-        <div className="mb-6 flex gap-2">
-          <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")}>
-            All Issues
-          </Button>
-          <Button variant={filter === "core" ? "default" : "outline"} onClick={() => setFilter("core")}>
-            Core Story
-          </Button>
-          <Button variant={filter === "lead-in" ? "default" : "outline"} onClick={() => setFilter("lead-in")}>
-            Lead-ins
-          </Button>
-          <Button variant={filter === "tie-in" ? "default" : "outline"} onClick={() => setFilter("tie-in")}>
-            Tie-ins
-          </Button>
-          <Link href={`/reading-orders/${event.slug}/collected-editions`}>
-            <Button variant="ghost">
-              <Library className="mr-2 h-4 w-4" />
-              Collected Editions
-            </Button>
-          </Link>
-        </div>
-
-        <ScrollArea className="h-[600px] pr-4">
+        <div>
           {filteredIssues.map((issue, index) => (
             <Card key={index} className="mb-4 overflow-hidden">
               <div className="md:flex">
-                <div className="relative h-[200px] w-full md:w-[150px]">
+                <div className="relative w-full md:w-[150px]">
                   <Image src="/placeholder.svg" alt={issue.title} fill className="object-cover" />
                 </div>
                 <div className="p-4 flex-1">
@@ -115,18 +104,16 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                       </div>
                       <p className="text-muted-foreground">{issue.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                      <Badge variant={issue.type.name === "core" ? "default" : "secondary"}>
-                        {issue.type.name === "core" ? "Core Issue" : issue.type.name === "tie-in" ? "Tie-in" : "Lead-in"}
-                      </Badge>
+                        <Badge variant={issue.type.name === "core" ? "default" : "secondary"}>
+                          {issue.type.name === "core" ? "Core Issue" : issue.type.name === "tie-in" ? "Tie-in" : "Lead-in"}
+                        </Badge>
                         <Badge variant="outline">{formatDate(issue.date)}</Badge>
                       </div>
 
                       {issue.collection && (
-                        <div className="mt-4 border-t pt-4">
-                          <p className="text-sm font-medium">Collected in:</p>
-                          <div className="mt-2 flex items-center gap-2">
-                            <Badge variant="outline">{issue.collection.title}</Badge>
-                          </div>
+                        <div className="flex mt-4 border-t pt-4 items-center gap-4">
+                          <span className="text-sm font-medium">Collected in:</span>
+                          <Badge variant="outline">{issue.collection.title}</Badge>
                         </div>
                       )}
                     </div>
@@ -141,7 +128,7 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
               </div>
             </Card>
           ))}
-        </ScrollArea>
+        </div>
       </div>
     </div>
   )
