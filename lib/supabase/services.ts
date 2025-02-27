@@ -9,9 +9,7 @@ export async function getEvents() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*),
-        previous_event:previous_event_id(*),
-        next_event:next_event_id(*)
+        event_type:event_types(*)
       `)
       .eq("is_visible", true)
       .order("release_year", { ascending: false })
@@ -78,9 +76,7 @@ export async function getEventsForTimeline() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*),
-        previous_event:previous_event_id(*),
-        next_event:next_event_id(*)
+        event_type:event_types(*)
       `)
       .order("release_year", { ascending: false })
 
