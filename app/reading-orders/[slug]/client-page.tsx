@@ -16,7 +16,7 @@ type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
 interface ReadingOrderPageProps {
   event: Issue
-  issues: EventIssue
+  issues: EventIssue []
 }
 
 export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
