@@ -22,12 +22,12 @@ interface ReadingOrderPageProps {
 export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
   const [filter, setFilter] = useState<IssueType>("all")
 
-  const filteredIssues = issues.filter((issue) => {
-    if (filter === "all") return true
-    return issue.type.name === filter
-  })
+  console.log(issues);
 
-  console.log(event);
+  const filteredIssues = issues.filter((issues) => {
+    if (filter === "all") return true
+    return issues.type.name === filter
+  })
 
   return (
     <div className="lex flex-col bg-background">
