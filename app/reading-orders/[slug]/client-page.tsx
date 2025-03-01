@@ -22,8 +22,6 @@ interface ReadingOrderPageProps {
 export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
   const [filter, setFilter] = useState<IssueType>("all")
 
-  console.log(issues);
-
   const filteredIssues = issues.filter((issues) => {
     if (filter === "all") return true
     return issues.type.name === filter
@@ -109,10 +107,10 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                         <Badge variant="outline">{formatDate(issue.issues.date)}</Badge>
                       </div>
 
-                      {issue.collection && (
+                      {issue.issues.collection && (
                         <div className="flex mt-4 border-t pt-4 items-center gap-4">
                           <span className="text-sm font-medium">Collected in:</span>
-                          <Badge variant="outline">{issue.collection.title}</Badge>
+                          <Badge variant="outline">{issue.issues.collection.title}</Badge>
                         </div>
                       )}
                     </div>
