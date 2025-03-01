@@ -10,7 +10,7 @@ import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PurchaseButton } from "@/components/purchase-button"
 import { formatDate } from "@/lib/utils"
-import type { Event, Issue } from "@/lib/supabase/types"
+import type { EventIssue, Issue } from "@/lib/supabase/types"
 
 type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
