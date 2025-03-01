@@ -101,7 +101,7 @@ export interface EventIssue {
   order: number
   event_id: number
   issue_id: number
-  issues: Issue []
+  issues: Issue
   type_id: number
   type: IssueType
   importance: string
