@@ -10,13 +10,13 @@ import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PurchaseButton } from "@/components/purchase-button"
 import { formatDate } from "@/lib/utils"
-import type { EventIssue, Issue } from "@/lib/supabase/types"
+import type { Issue, EventIssue } from "@/lib/supabase/types"
 
 type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
 interface ReadingOrderPageProps {
-  event: EventIssue
-  issues: Issue[]
+  event: Issue
+  issues: EventIssue
 }
 
 export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
