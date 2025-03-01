@@ -88,7 +88,7 @@ export interface Issue {
   description: string
   date: string
   type_id: number
-  type: IssueType
+  /*type: IssueType*/
   importance: string
   collection_id: number | null
   created_at: string
