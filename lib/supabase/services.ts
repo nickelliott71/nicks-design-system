@@ -190,7 +190,7 @@ export async function getEventBySlug(slug: string) {
   }
 }
 
-export async function getIssuesForEvent(eventId: string) {
+export async function getIssuesForEvent(eventId: number) {
 
   try {
     console.log("Fetching new issues for event:", eventId)
@@ -217,7 +217,6 @@ export async function getIssuesForEvent(eventId: string) {
         return []
       }
   
-      console.log("New issues:", data);
       console.log("Successfully fetched new issues:", data.length)
       return data
     } catch (error) {
