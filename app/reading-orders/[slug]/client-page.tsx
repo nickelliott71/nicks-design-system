@@ -87,7 +87,7 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">{issue.issues.title}</h3>
+                        <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title}</h3>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
