@@ -189,7 +189,7 @@ export interface Database {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "event_issues_event_type_id_fkey"
+            foreignKeyName: "event_issues_issue_type_id_fkey"
             columns: ["type_id"]
             referencedRelation: "issue_types"
             referencedColumns: ["id"]
