@@ -1,4 +1,4 @@
-import { getEventBySlug, getEventIssues, getIssuesForEvent } from "@/lib/supabase/services"
+import { getEventBySlug/*, getEventIssues,*/ getIssuesForEvent } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
