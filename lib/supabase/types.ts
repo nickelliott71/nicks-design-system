@@ -96,6 +96,17 @@ export interface Issue {
   purchase_options?: IssuePurchaseOption[]
 }
 
+export interface EventIssue {
+  id: number
+  order: number
+  event_id: number
+  issue_id: number
+  issues: Issue []
+  type_id: number
+  type: IssueType
+  importance: string
+}
+
 export interface IssuePurchaseOption {
   id: number
   issue_id: number

@@ -15,7 +15,7 @@ import type { Event, Issue } from "@/lib/supabase/types"
 type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
 interface ReadingOrderPageProps {
-  event: Event
+  event: EventIssue
   issues: Issue[]
 }
 
