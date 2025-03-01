@@ -29,7 +29,7 @@ export async function getEvents() {
 
     // Fetch reading times from the view
     const { data: readingTimes, error: readingError } = await supabase
-      .from("event_reading_times")
+      .from("event_reading_time")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 
@@ -37,7 +37,7 @@ export async function getEvents() {
 
     // Fetch issue counts from the view
     const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_counts")
+      .from("event_issue_count")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 
@@ -95,7 +95,7 @@ export async function getEventsForTimeline() {
 
     // Fetch reading times from the view
     const { data: readingTimes, error: readingError } = await supabase
-      .from("event_reading_times")
+      .from("event_reading_time")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 
@@ -103,7 +103,7 @@ export async function getEventsForTimeline() {
 
     // Fetch issue counts from the view
     const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_counts")
+      .from("event_issue_count")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 

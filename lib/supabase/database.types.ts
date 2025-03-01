@@ -239,33 +239,24 @@ export interface Database {
           created_at: string
           date: string
           description: string
-          event_id: number
           id: number
-          importance: string
           title: string
-          type_id: number
         }
         Insert: {
           collection_id?: number | null
           created_at?: string
           date: string
           description: string
-          event_id: number
           id?: number
-          importance: string
           title: string
-          type_id: number
         }
         Update: {
           collection_id?: number | null
           created_at?: string
           date?: string
           description?: string
-          event_id?: number
           id?: number
-          importance?: string
           title?: string
-          type_id?: number
         }
         Relationships: [
           {
@@ -273,19 +264,7 @@ export interface Database {
             columns: ["collection_id"]
             referencedRelation: "collections"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "issues_event_id_fkey"
-            columns: ["event_id"]
-            referencedRelation: "events"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "issues_type_id_fkey"
-            columns: ["type_id"]
-            referencedRelation: "issue_types"
-            referencedColumns: ["id"]
-          },
+          }
         ]
       }
       publishers: {
@@ -420,14 +399,14 @@ export interface Database {
       }
     }
     Views: {
-      event_reading_times: {
+      event_reading_time: {
         Row: {
           event_id: number
           reading_hours: number
         }
         Relationships: []
       }
-      event_issue_counts: {
+      event_issue_count: {
         Row: {
           event_id: number
           core_count: number
