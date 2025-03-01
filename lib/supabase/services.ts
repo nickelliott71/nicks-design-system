@@ -190,6 +190,42 @@ export async function getEventBySlug(slug: string) {
   }
 }
 
+export async function getIssuesForEvent(eventId: string) {
+
+  try {
+    console.log("Fetching new issues for event:", eventId)
+
+    const { data, error, status } = await supabase
+      .from('event_issues')
+      .select(`
+        *,
+        issues:issues(*, collection:collections(*), purchase_options:issue_purchase_options(*, format:formats(*))),
+        type:issue_types(*)
+      `)
+      .eq('event_id', eventId)
+      .order('order', { ascending: true });
+
+      console.log("Supabase response status:", status)
+
+      if (error) {
+        console.error("Supabase error:", error)
+        throw new Error(`Failed to fetch issues for event ${eventId}: ${error.message}`)
+      }
+  
+      if (!data) {
+        console.log("No issues found for event:", eventId)
+        return []
+      }
+  
+      console.log("New issues:", data);
+      console.log("Successfully fetched new issues:", data.length)
+      return data
+    } catch (error) {
+      console.error("Error in getEventIssues:", error)
+      throw error
+    }
+}
+
 export async function getEventIssues(eventId: number) {
   try {
     console.log("Fetching issues for event:", eventId)
@@ -217,6 +253,7 @@ export async function getEventIssues(eventId: number) {
       return []
     }
 
+    console.log(data);
     console.log("Successfully fetched issues:", data.length)
     return data
   } catch (error) {

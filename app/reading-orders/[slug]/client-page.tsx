@@ -83,13 +83,13 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
             <Card key={index} className="mb-4 overflow-hidden">
               <div className="md:flex">
                 <div className="relative w-full md:w-[150px]">
-                  <Image src="/placeholder.svg" alt={issue.title} fill className="object-cover" />
+                  <Image src="/placeholder.svg" alt={issue.issues.title} fill className="object-cover" />
                 </div>
                 <div className="p-4 flex-1">
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">{issue.title}</h3>
+                        <h3 className="text-xl font-semibold">{issue.issues.title}</h3>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>
@@ -101,12 +101,12 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                           </Tooltip>
                         </TooltipProvider>
                       </div>
-                      <p className="text-muted-foreground">{issue.description}</p>
+                      <p className="text-muted-foreground">{issue.issues.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
                         <Badge variant={issue.type.name === "core" ? "default" : "secondary"}>
                           {issue.type.name === "core" ? "Core Issue" : issue.type.name === "tie-in" ? "Tie-in" : "Lead-in"}
                         </Badge>
-                        <Badge variant="outline">{formatDate(issue.date)}</Badge>
+                        <Badge variant="outline">{formatDate(issue.issues.date)}</Badge>
                       </div>
 
                       {issue.collection && (
@@ -118,8 +118,8 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      {issue.purchase_options && issue.purchase_options.length > 0 && (
-                        <PurchaseButton options={issue.purchase_options} />
+                      {issue.issues.purchase_options && issue.issues.purchase_options.length > 0 && (
+                        <PurchaseButton options={issue.issues.purchase_options} />
                       )}
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
+import { getEventBySlug, getEventIssues, getIssuesForEvent } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
@@ -25,8 +25,12 @@ export default async function Page({ params }: PageProps) {
   const event = await getEventBySlug(slug).catch(() => null)
   if (!event) notFound()
 
-  console.log("Fetching issues for event:", event.id)
+  /*console.log("Fetching issues for event:", event.id)
   const issues = await getEventIssues(event.id)
+  console.log("Found issues:", issues.length)*/
+
+  console.log("Fetching issues for event:", event.id)
+  const issues = await getIssuesForEvent(event.id)
   console.log("Found issues:", issues.length)
 
   return <ReadingOrderPage event={event} issues={issues} />

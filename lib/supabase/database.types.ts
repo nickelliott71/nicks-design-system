@@ -147,6 +147,55 @@ export interface Database {
           },
         ]
       }
+      event_issues: {
+        Row: {
+          created_at: string
+          importance: string
+          id: number
+          event_id: number
+          issue_id: number
+          type_id: number
+          order: number
+        }
+        Insert: {
+          created_at?: string
+          importance: string
+          id?: number
+          event_id?: number
+          issue_id?: number
+          type_id?: number
+          order: number
+        }
+        Update: {
+          created_at?: string
+          importance?: string
+          id?: number
+          event_id?: number
+          issue_id?: number
+          type_id?: number
+          order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_issues_event_id_fkey"
+            columns: ["event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_issues_issue_id_fkey"
+            columns: ["issue_id"]
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_issues_type_id_fkey"
+            columns: ["type_id"]
+            referencedRelation: "issue_types"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       issue_purchase_options: {
         Row: {
           asin: string
