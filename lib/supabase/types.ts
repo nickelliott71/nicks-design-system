@@ -83,13 +83,13 @@ export interface CollectionPurchaseOption {
 
 export interface Issue {
   id: number
-  event_id: number
+  /*event_id: number*/
   title: string
   description: string
   date: string
-  type_id: number
+  /*type_id: number*/
   /*type: IssueType*/
-  importance: string
+  /*importance: string*/
   collection_id: number | null
   created_at: string
   collection?: Collection | null
