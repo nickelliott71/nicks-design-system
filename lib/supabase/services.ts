@@ -1,4 +1,3 @@
-import { time } from "console"
 import { supabase } from "./client"
 
 export async function getEvents() {
@@ -247,7 +246,7 @@ export async function getMetaDataForSpecificTimeline(slug: string) {
 
     console.log("Successfully fetched event:", data.name)
     return data
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error in getEventBySlug:", error)
     throw error
   }

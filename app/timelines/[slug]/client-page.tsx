@@ -14,8 +14,8 @@ interface TimelinePageProps {
 }
 
 export default function TimelinesPage({ timeline }: TimelinePageProps) {
-  const [search, setSearch] = useState("")
-  const [selectedPublisher, setSelectedPublisher] = useState<string>("all")
+  const [search] = useState("")
+  const [selectedPublisher] = useState<string>("all")
   const [selectedYear, setSelectedYear] = useState<number | null>(null)
 
   const filteredEvents = timeline.events?.filter((event) => {
