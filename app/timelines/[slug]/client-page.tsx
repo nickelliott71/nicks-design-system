@@ -2,10 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, ArrowLeft, Filter } from "lucide-react"
+import { ArrowLeft, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { TimelineNavigator } from "@/components/timeline-navigator"
 import { VisualTimeline } from "@/components/visual-timeline"
