@@ -1,3 +1,4 @@
+import { time } from "console"
 import { supabase } from "./client"
 
 export async function getEvents() {
@@ -129,6 +130,125 @@ export async function getEventsForTimeline() {
     return enrichedEvents ?? []
   } catch (error) {
     console.error("Error in getEventsForTimeline:", error)
+    throw error
+  }
+}
+
+export async function getEventsForSpecificTimeline(slug: string) {
+  try {
+    console.log("Fetching all events from Supabase for timeline...", slug)
+
+    const { data: timeline, error: timelineError } = await supabase
+      .from("timelines")
+      .select(`
+        *
+      `)
+      .eq("slug", slug)
+      .single()
+
+    if (timelineError) throw timelineError
+
+    console.log("Timeline:", timeline)
+
+    const { data: timelineEvents, error: timelineEventsError } = await supabase
+      .from("timeline_events")
+      .select(`
+        *,
+        event:events!timeline_events_event_id_fkey(*, publisher:publishers(*), event_type:event_types(*))
+      `)
+      .eq("timeline_id", timeline.id)
+
+      if (timelineEventsError) throw timelineEventsError      
+
+    // Fetch main characters for each event
+    const { data: eventCharacters, error: charactersError } = await supabase
+      .from("event_characters")
+      .select(`
+        *,
+        character:characters(*)
+      `)
+      .in("event_id", timelineEvents?.map((e) => e.id) ?? [])
+
+      console.log(eventCharacters);
+
+    if (charactersError) throw charactersError
+
+    // Fetch reading times from the view
+    const { data: readingTimes, error: readingError } = await supabase
+      .from("event_reading_time")
+      .select("*")
+      .in("event_id", timelineEvents?.map((e) => e.id) ?? [])
+
+    if (readingError) throw readingError
+
+    // Fetch issue counts from the view
+    const { data: issueCounts, error: countsError } = await supabase
+      .from("event_issue_count")
+      .select("*")
+      .in("event_id", timelineEvents?.map((e) => e.id) ?? [])
+
+    if (countsError) throw countsError
+
+    // Combine all the data
+    const enrichedEvents = timelineEvents?.map((event) => {
+      const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
+      const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
+      const counts = issueCounts?.find((ic) => ic.event_id === event.id)
+
+      return {
+        ...event.event,
+        main_characters: characters ?? [],
+        reading_time: readingTime ?? 0,
+        issue_counts: {
+          core: counts?.core_count ?? 0,
+          tie_in: counts?.tie_in_count ?? 0,
+        },
+      }
+    })
+
+    console.log("Timeline Events Enriched:", timelineEvents)
+
+    return {      
+      ...timeline,
+      events: enrichedEvents ?? [],
+    }
+  } catch (error) {
+    console.error("Error in getEventsForSpecificTimeline:", error)
+    throw error
+  }
+}
+
+export async function getMetaDataForSpecificTimeline(slug: string) {
+  try {
+    console.log("Fetching timeline meta by slug:", slug)
+
+    const { data, error, status } = await supabase
+      .from("timelines")
+      .select(`
+        *
+      `)
+      .eq("slug", slug)
+      .single()
+
+    console.log("Timeline metadata:", data);
+
+    if (error) {
+      console.error("Supabase error:", error)
+      throw new Error(`Failed to fetch event with slug ${slug}: ${error.message}`)
+    }
+
+    if (!data) {
+      console.log("No event found with slug:", slug)
+      return null
+    }
+
+    console.log("Supabase response status:", status)
+    console.log("Fetched event data:", data)
+
+    console.log("Successfully fetched event:", data.name)
+    return data
+  } catch (error: any) {
+    console.error("Error in getEventBySlug:", error)
     throw error
   }
 }

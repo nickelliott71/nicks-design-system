@@ -112,3 +112,20 @@ export interface IssuePurchaseOption {
   created_at: string
 }
 
+export interface Timeline {
+  id: number
+  created_at: string
+  name: string
+  description: string
+  slug: string
+  events?: Event[]
+}
+
+export interface TimelineEvent {
+  id: number
+  created_at: string
+  timeline_id: number
+  previous_event_id: number | null
+  next_event_id: number | null
+  event_id: number
+}

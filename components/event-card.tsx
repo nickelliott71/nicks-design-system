@@ -89,7 +89,7 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
             <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t">
               <Link href={`/reading-orders/${event.slug}`} className="flex-1">
                 <Button size="lg" className="w-full">
-                  {variant === "timeline" ? "Start Reading" : "View Reading Order"}
+                  Reading order
                 </Button>
               </Link>
               {variant === "grid" && (

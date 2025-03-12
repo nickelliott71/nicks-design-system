@@ -397,6 +397,82 @@ export interface Database {
           }
         ]
       }
+      timelines: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          slug: string
+          description: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          slug: string
+          description: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          slug?: string
+          description?: string
+        }
+        Relationships: []
+      }
+      timeline_events: {
+        Row: {
+          created_at: string
+          id: number
+          timeline_id: number
+          event_id: number
+          previous_event_id: number
+          next_event_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          timeline_id: number
+          event_id: number
+          previous_event_id: number
+          next_event_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          timeline_id?: number
+          event_id?: number
+          previous_event_id?: number
+          next_event_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timeline_events_timeline_id_fkey"
+            columns: ["timeline_id"]
+            referencedRelation: "timelines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timeline_events_event_id_fkey"
+            columns: ["event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timeline_events_previous_event_id_fkey"
+            columns: ["previous_event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timeline_events_next_event_id_fkey"
+            columns: ["next_event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       event_reading_time: {
