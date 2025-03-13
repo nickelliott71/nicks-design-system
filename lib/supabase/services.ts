@@ -303,6 +303,8 @@ export async function getEventBySlug(slug: string, timeline: string) {
       console.log("Current timeline from getEventsBySlug:", timelineData);
     }
 
+    if (timelineDataError) throw timelineDataError
+
     // Fetch timeline detail
     const { data: timelineEventsData, error: timelineEventsDataError } = await supabase
       .from("timeline_events")
@@ -313,7 +315,7 @@ export async function getEventBySlug(slug: string, timeline: string) {
 
     console.log("Timeline Events Data from getEventsBySlug:", timelineEventsData);
 
-    if (timelineDataError) throw timelineDataError
+    /*if (timelineEventsDataError) throw timelineEventsDataError*/
 
     const previousEvent = timelineEventsData?.previous_event_id
       ? await supabase

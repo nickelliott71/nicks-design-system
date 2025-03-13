@@ -2,8 +2,6 @@ import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
-import { time } from "console"
-import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime"
 
 interface PageProps {
   params: Promise<{ slug: string }>
