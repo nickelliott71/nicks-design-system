@@ -1,38 +1,41 @@
+'use client'
+
+import { useParams, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
-import { notFound } from "next/navigation"
+import { notFound } from 'next/navigation'
 import ReadingOrderPage from "./client-page"
-import type { Metadata } from 'next'
 
-interface Props {
-  params: { slug: string }
-  searchParams: { timeline?: string }
-}
+export default function Page() {
+  const params = useParams<{ slug: string }>()
+  const searchParams = useSearchParams()
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const { slug } = params
-  const timeline = searchParams.timeline || "5"
-  const event = await getEventBySlug(slug, timeline).catch(() => null)
-  if (!event) return { title: "Not Found" }
+  const slug = params.slug
+  const timeline = searchParams.get('timeline') || '5'
 
-  return {
-    title: `${event.title} Reading Order | Reading Orders`,
-    description: event.description,
-  }
-}
+  const [event, setEvent] = useState<any>(null)
+  const [issues, setIssues] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-export default async function Page({ params, searchParams }: Props) {
-  const { slug } = params
-  const timeline = searchParams.timeline || "5"
-  
-  console.log("Fetching event data for slug:", slug)
-  console.log("Fetching event data for timeline:", timeline)
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true)
 
-  const event = await getEventBySlug(slug, timeline).catch(() => null)
-  if (!event) notFound()
+      const eventData = await getEventBySlug(slug, timeline).catch(() => null)
+      if (!eventData) return notFound()
 
-  console.log("Fetching issues for event:", event.id)
-  const issues = await getEventIssues(event.id)
-  console.log("Found issues:", issues.length)
+      setEvent(eventData)
+
+      const issueData = await getEventIssues(eventData.id)
+      setIssues(issueData)
+
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [slug, timeline])
+
+  if (loading) return <div>Loading...</div>
 
   return <ReadingOrderPage event={event} issues={issues} timeline={event.current_timeline} />
 }
