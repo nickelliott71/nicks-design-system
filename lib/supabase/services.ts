@@ -9,23 +9,30 @@ export async function getEvents() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_timeline_types(*)
+        event_type:event_timeline_types(*),
+        default_timeline_id
       `)
       .eq("is_visible", true)
       .order("release_year", { ascending: false })
 
+    console.log("Events from getEvents:", events);
+
     if (eventsError) throw eventsError
+
+    // Extract default_timeline_id as a number
+    const timelineIds = events?.map((e) => e.default_timeline_id) ?? []
+
+    console.log("Timeline IDs from getEvents:", timelineIds);
 
     // Fetch default timeline for each event
     const { data: timeline, error: timelineError } = await supabase
-      .from("timeline_events")
+      .from("timelines")
       .select(`
-        *,
-        timeline:timelines(*)
+        *
       `)
-      .in("event_id", events?.map((e) => e.id) ?? [])
+      .in("id", timelineIds)
 
-    console.log("Timeline from getEvents:", timeline);  
+    console.log("Timelines from getEvents:", timeline);  
 
     if (timelineError) throw timelineError
 
@@ -61,7 +68,9 @@ export async function getEvents() {
       const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
       const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
       const counts = issueCounts?.find((ic) => ic.event_id === event.id)
-      const curentTimeline = timeline?.find((ic) => ic.id === event.default_timeline_id)
+      const curentTimeline = timeline?.find((ct) => ct.id === event.default_timeline_id)
+
+      console.log("Current Timeline:", curentTimeline);
 
       return {
         ...event,
@@ -71,7 +80,7 @@ export async function getEvents() {
           core: counts?.core_count ?? 0,
           tie_in: counts?.tie_in_count ?? 0,
         },
-        current_timeline: curentTimeline ?? 5
+        current_timeline: curentTimeline
       }
     })
 
