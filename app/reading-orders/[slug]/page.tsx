@@ -2,14 +2,18 @@ import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
+import { time } from "console"
+import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime"
 
 interface PageProps {
   params: Promise<{ slug: string }>
+  searchParams: { timeline?: string }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const event = await getEventBySlug(slug).catch(() => null)
+  const timeline = searchParams.timeline || "5"
+  const event = await getEventBySlug(slug, timeline).catch(() => null)
   if (!event) return { title: "Not Found" }
 
   return {
@@ -18,11 +22,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
 
   const { slug } = await params
+  const timeline = searchParams.timeline || "5"
   console.log("Fetching event data for slug:", slug)
-  const event = await getEventBySlug(slug).catch(() => null)
+  console.log("Fetching event data for timeline:", timeline)
+  const event = await getEventBySlug(slug, timeline).catch(() => null)
   if (!event) notFound()
 
   console.log("Fetching issues for event:", event.id)

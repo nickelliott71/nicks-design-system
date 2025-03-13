@@ -1,3 +1,4 @@
+import { parse } from "path"
 import { supabase } from "./client"
 
 export async function getEvents() {
@@ -16,7 +17,7 @@ export async function getEvents() {
 
     if (eventsError) throw eventsError
 
-    // Fetch defualt timeline for each event
+    // Fetch default timeline for each event
     const { data: timeline, error: timelineError } = await supabase
       .from("timeline_events")
       .select(`
@@ -24,6 +25,8 @@ export async function getEvents() {
         timeline:timelines(*)
       `)
       .in("event_id", events?.map((e) => e.id) ?? [])
+
+    console.log("Timeline from getEvents:", timeline);  
 
     if (timelineError) throw timelineError
 
@@ -262,12 +265,12 @@ export async function getMetaDataForSpecificTimeline(slug: string) {
     console.log("Successfully fetched event:", data.name)
     return data
   } catch (error) {
-    console.error("Error in getEventBySlug:", error)
+    console.error("Error in getMetaDataForSpecificTimeline:", error)
     throw error
   }
 }
 
-export async function getEventBySlug(slug: string) {
+export async function getEventBySlug(slug: string, timeline: string) {
   try {
     console.log("Fetching event by slug:", slug)
 
@@ -282,50 +285,49 @@ export async function getEventBySlug(slug: string) {
       .single()
 
     if (error) {
-      console.error("Supabase error:", error)
-      throw new Error(`Failed to fetch event with slug ${slug}: ${error.message}`)
-    }
-
-    if (!data) {
       console.log("No event found with slug:", slug)
       return null
     }
 
+    console.log("Event from getEventsBySlug:", data);
+
+    const timelineId = timeline ? parseInt(timeline, 10) : 5
+
+    const { data: timelineData, error: timelineDataError } = await supabase
+      .from("timelines")
+      .select("*")
+      .eq("id", timelineId)
+      .single()
+
+    if (!timelineDataError) {
+      console.log("Current timeline from getEventsBySlug:", timelineData);
+    }
+
     // Fetch timeline detail
-    const { data: timeline, error: timelineError } = await supabase
-    .from("timeline_events")
-    .select(`
-      *,
-      timeline:timelines(*)
-    `)
-    .eq("event_id", data.id)
-    .single()
+    const { data: timelineEventsData, error: timelineEventsDataError } = await supabase
+      .from("timeline_events")
+      .select(`*`)
+      .eq("event_id", data.id)
+      .eq("timeline_id", timelineId) 
+      .single()
 
-    console.log("Timeline details", timeline);
+    console.log("Timeline Events Data from getEventsBySlug:", timelineEventsData);
 
-    if (timelineError) throw timelineError
+    if (timelineDataError) throw timelineDataError
 
-    const currentTimeline = timeline.timeline_id
-    ? await supabase
-        .from("timelines")
-        .select("*")
-        .eq("id", timeline.timeline_id)
-        .single()
-    : null
-
-    const previousEvent = timeline.previous_event_id
+    const previousEvent = timelineEventsData?.previous_event_id
       ? await supabase
           .from("events")
           .select("*")
-          .eq("id", timeline.previous_event_id)
+          .eq("id", timelineEventsData.previous_event_id)
           .single()
       : null
 
-    const nextEvent = timeline.next_event_id
+    const nextEvent = timelineEventsData?.next_event_id
       ? await supabase
           .from("events")
           .select("*")
-          .eq("id", timeline.next_event_id)
+          .eq("id", timelineEventsData.next_event_id)
           .single()
       : null
 
@@ -333,7 +335,7 @@ export async function getEventBySlug(slug: string) {
       ...data,
       previous_event: previousEvent?.data || null,
       next_event: nextEvent?.data || null,
-      current_timeline: currentTimeline?.data || null,
+      current_timeline: timelineData
     }
 
     console.log("Supabase response status:", status)
