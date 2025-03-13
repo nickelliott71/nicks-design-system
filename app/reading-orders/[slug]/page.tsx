@@ -1,14 +1,14 @@
 import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
-import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
+import type { Metadata } from 'next'
 
-interface PageProps {
+interface Props {
   params: { slug: string }
   searchParams: { timeline?: string }
 }
 
-export async function generateMetadata({ params, searchParams }: PageProps) {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = params
   const timeline = searchParams.timeline || "5"
   const event = await getEventBySlug(slug, timeline).catch(() => null)
@@ -20,12 +20,13 @@ export async function generateMetadata({ params, searchParams }: PageProps) {
   }
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
-
+export default async function Page({ params, searchParams }: Props) {
   const { slug } = params
   const timeline = searchParams.timeline || "5"
+  
   console.log("Fetching event data for slug:", slug)
   console.log("Fetching event data for timeline:", timeline)
+
   const event = await getEventBySlug(slug, timeline).catch(() => null)
   if (!event) notFound()
 
