@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from 'next/navigation'
 import ReadingOrderPage from "./client-page"
+import { Event, EventIssue } from '@/lib/supabase/types'
 
 export default function Page() {
   const params = useParams<{ slug: string }>()
@@ -13,8 +14,8 @@ export default function Page() {
   const slug = params.slug
   const timeline = searchParams.get('timeline') || '5'
 
-  const [event, setEvent] = useState<any>(null)
-  const [issues, setIssues] = useState<any[]>([])
+  const [event, setEvent] = useState<Event | null>(null)
+  const [issues, setIssues] = useState<EventIssue[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -37,5 +38,6 @@ export default function Page() {
 
   if (loading) return <div>Loading...</div>
 
+  if (!event || !event.current_timeline) return notFound()
   return <ReadingOrderPage event={event} issues={issues} timeline={event.current_timeline} />
 }

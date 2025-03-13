@@ -46,7 +46,7 @@ export interface Event {
   event_type?: EventType
   previous_event?: Event | null
   next_event?: Event | null
-  current_timeline?: Timeline | null
+  current_timeline?: Timeline
   main_characters?: Character[]
   reading_time?: number
   issue_counts?: {
