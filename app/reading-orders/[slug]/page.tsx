@@ -4,12 +4,12 @@ import type { Metadata } from "next"
 import ReadingOrderPage from "./client-page"
 
 interface PageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
   searchParams: { timeline?: string }
 }
 
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
-  const { slug } = params
+  const { slug } = await params
   const timeline = searchParams.timeline || "5"
   const event = await getEventBySlug(slug, timeline).catch(() => null)
   if (!event) return { title: "Not Found" }
@@ -22,7 +22,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 
 export default async function Page({ params, searchParams }: PageProps) {
 
-  const { slug } = params
+  const { slug } = await params
   const timeline = searchParams.timeline || "5"
   console.log("Fetching event data for slug:", slug)
   console.log("Fetching event data for timeline:", timeline)
