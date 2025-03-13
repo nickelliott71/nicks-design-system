@@ -9,7 +9,7 @@ export async function getEvents() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*)
+        event_type:event_timeline_types(*)
       `)
       .eq("is_visible", true)
       .order("release_year", { ascending: false })
@@ -76,7 +76,7 @@ export async function getEventsForTimeline() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*)
+        event_type:event_timeline_types(*)
       `)
       .order("release_year", { ascending: false })
 
@@ -153,7 +153,7 @@ export async function getEventsForSpecificTimeline(slug: string) {
       .from("timeline_events")
       .select(`
         *,
-        event:events!timeline_events_event_id_fkey(*, publisher:publishers(*), event_type:event_types(*))
+        event:events!timeline_events_event_id_fkey(*, publisher:publishers(*), event_type:event_timeline_types(*))
       `)
       .eq("timeline_id", timeline.id)
 
@@ -261,7 +261,7 @@ export async function getEventBySlug(slug: string) {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_types(*)
+        event_type:event_timeline_types(*)
       `)
       .eq("slug", slug)
       .single()
@@ -276,19 +276,41 @@ export async function getEventBySlug(slug: string) {
       return null
     }
 
-    const previousEvent = data.previous_event_id
+    // Fetch timeline detail
+    const { data: timeline, error: timelineError } = await supabase
+    .from("timeline_events")
+    .select(`
+      *,
+      timeline:timelines(*)
+    `)
+    .eq("event_id", data.id)
+    .single()
+
+    console.log("Timeline details", timeline);
+
+    if (timelineError) throw timelineError
+
+    const currentTimeline = timeline.timeline_id
+    ? await supabase
+        .from("timelines")
+        .select("*")
+        .eq("id", timeline.timeline_id)
+        .single()
+    : null
+
+    const previousEvent = timeline.previous_event_id
       ? await supabase
           .from("events")
           .select("*")
-          .eq("id", data.previous_event_id)
+          .eq("id", timeline.previous_event_id)
           .single()
       : null
 
-    const nextEvent = data.next_event_id
+    const nextEvent = timeline.next_event_id
       ? await supabase
           .from("events")
           .select("*")
-          .eq("id", data.next_event_id)
+          .eq("id", timeline.next_event_id)
           .single()
       : null
 
@@ -296,6 +318,7 @@ export async function getEventBySlug(slug: string) {
       ...data,
       previous_event: previousEvent?.data || null,
       next_event: nextEvent?.data || null,
+      current_timeline: currentTimeline?.data || null,
     }
 
     console.log("Supabase response status:", status)

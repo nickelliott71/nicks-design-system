@@ -10,16 +10,17 @@ import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { PurchaseButton } from "@/components/purchase-button"
 import { formatDate } from "@/lib/utils"
-import type { Event, EventIssue } from "@/lib/supabase/types"
+import type { Event, EventIssue, Timeline } from "@/lib/supabase/types"
 
 type IssueType = "all" | "core" | "tie-in" | "lead-in"
 
 interface ReadingOrderPageProps {
   event: Event
   issues: EventIssue []
+  timeline: Timeline
 }
 
-export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProps) {
+export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrderPageProps) {
   const [filter, setFilter] = useState<IssueType>("all")
 
   const filteredIssues = issues.filter((issues) => {
@@ -31,7 +32,7 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
     <div className="lex flex-col bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold">{event.title} Reading Order</h1>
+          <h1 className="text-4xl font-bold">{event.title} <span className="text-muted-foreground">Reading Order</span></h1>
           <p className="mt-4 text-xl text-muted-foreground">{event.description}</p>
         </div>
 
@@ -58,15 +59,22 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
           </div>
           <div className="flex mb-6 gap-4">
             {event.previous_event && (
-              <Link href={`/reading-orders/${event.previous_event.slug}`}>
+              <Link href={`/reading-orders/${event.previous_event.slug}?timeline=${timeline.id}`}>
                 <Button variant="outline" size="sm">
                   <ChevronLeft className="mr-1 h-4 w-4" />
                   Previous: {event.previous_event.title}
                 </Button>
               </Link>
             )}
+             {event.current_timeline && (
+              <Link href={`/timelines/${event.current_timeline.slug}`}>
+                <Button variant="link" size="sm">
+                  {event.current_timeline.name} timeline
+                </Button>
+              </Link>
+            )}           
             {event.next_event && (
-              <Link href={`/reading-orders/${event.next_event.slug}`}>
+              <Link href={`/reading-orders/${event.next_event.slug}?timeline=${timeline.id}`}>
                 <Button variant="outline" size="sm">
                   Next: {event.next_event.title}
                   <ChevronRight className="ml-1 h-4 w-4" />
@@ -87,7 +95,7 @@ export default function ReadingOrderPage({ event, issues }: ReadingOrderPageProp
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title}</h3>
+                        <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title} <span className="text-muted-foreground">{issue.issues.subtitle}</span></h3>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger>

@@ -38,13 +38,14 @@ export interface Event {
   publisher_id: number
   release_year: number
   event_type_id: number | null
-  previous_event_id: number | null
-  next_event_id: number | null
+  /*previous_event_id: number | null
+  next_event_id: number | null*/
   created_at: string
   publisher?: Publisher
   event_type?: EventType
   previous_event?: Event | null
   next_event?: Event | null
+  current_timeline?: Timeline | null
   main_characters?: Character[]
   reading_time?: number
   issue_counts?: {
@@ -84,6 +85,7 @@ export interface CollectionPurchaseOption {
 export interface Issue {
   id: number
   title: string
+  subtitle: string
   description: string
   date: string
   collection_id: number | null

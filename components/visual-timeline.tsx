@@ -2,14 +2,15 @@
 
 import { useMemo } from "react"
 import { EventCard } from "@/components/event-card"
-import type { Event } from "@/lib/supabase/types"
+import type { Event, Timeline } from "@/lib/supabase/types"
 
 interface VisualTimelineProps {
   events: Event[]
   selectedYear: number | null
+  timeline: Timeline
 }
 
-export function VisualTimeline({ events, selectedYear }: VisualTimelineProps) {
+export function VisualTimeline({ events, timeline, selectedYear }: VisualTimelineProps) {
   const sortedEvents = useMemo(() => [...events].sort((a, b) => a.release_year - b.release_year), [events])
 
   const filteredEvents = selectedYear
@@ -34,7 +35,7 @@ export function VisualTimeline({ events, selectedYear }: VisualTimelineProps) {
 
             {/* Event card */}
             <div className="ml-[120px] lg:ml-[140px]">
-              <EventCard event={event} variant="timeline" />
+              <EventCard event={event} timeline={timeline.id} />
             </div>
           </div>
         ))}

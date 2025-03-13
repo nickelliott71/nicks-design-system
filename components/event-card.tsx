@@ -10,18 +10,16 @@ import type { Event } from "@/lib/supabase/types"
 
 interface EventCardProps {
   event: Event
-  variant?: "timeline" | "grid"
+  timeline: number | null
 }
 
-export function EventCard({ event, variant = "grid" }: EventCardProps) {
+export function EventCard({ event, timeline }: EventCardProps) {
 
   return (
     <Card className="overflow-hidden">
-      <div className={variant === "timeline" ? "lg:flex" : "md:flex"}>
+      <div className="lg:flex">
         <div
-          className={`relative ${
-            variant === "timeline" ? "h-[200px] lg:h-[300px] w-full lg:w-[350px]" : "h-[300px] w-full md:w-[400px]"
-          } shrink-0`}
+          className={`relative h-[200px] lg:h-[300px] w-full lg:w-[350px] shrink-0`}
         >
           <Image src="/placeholder.svg" alt={`${event.title} Cover`} fill className="object-cover" />
         </div>
@@ -29,19 +27,16 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
           <div className="flex flex-col h-full gap-4 lg:gap-6">
             <div>
               <h2
-                className={`${variant === "timeline" ? "text-2xl lg:text-3xl" : "text-3xl"} font-bold tracking-tight`}
+                className="text-2xl lg:text-3xl font-bold tracking-tight"
               >
                 {event.title}
               </h2>
               <div className="mt-2 flex flex-wrap gap-2">
                 <Badge>{event.publisher?.name}</Badge>
                 <Badge variant="outline">{event.release_year}</Badge>
-                {event.event_type && <Badge variant="secondary">{event.event_type.name}</Badge>}
               </div>
               <p className="mt-4 text-muted-foreground text-base lg:text-lg leading-relaxed">{event.description}</p>
             </div>
-
-            {variant === "timeline" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
                 <div className="flex items-start gap-3">
                   <BookOpen className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
@@ -84,19 +79,13 @@ export function EventCard({ event, variant = "grid" }: EventCardProps) {
                   </div>
                 </div>
               </div>
-            )}
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t">
-              <Link href={`/reading-orders/${event.slug}`} className="flex-1">
+              <Link href={`/reading-orders/${event.slug}?timeline=${timeline}`} className="flex-1">
                 <Button size="lg" className="w-full">
                   Reading order
                 </Button>
               </Link>
-              {variant === "grid" && (
-                <Link href={`/reading-orders/${event.slug}/background`}>
-                  <Button variant="outline">Read Background</Button>
-                </Link>
-              )}
             </div>
           </div>
         </div>

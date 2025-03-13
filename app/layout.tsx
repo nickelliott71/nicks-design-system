@@ -30,9 +30,9 @@ export default function RootLayout({
                   Reading Orders
                 </Link>
                 <div className="flex items-center gap-4">
-                  <Link href="/timeline">
-                    <Button variant="outline">View Timeline</Button>
-                  </Link>
+                  {/*<Link href="/timeline">
+                    <Button variant="outline">View Timelines</Button>
+                  </Link>*/}
                   <ThemeToggle />
                 </div>
               </div>

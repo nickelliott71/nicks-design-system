@@ -88,8 +88,8 @@ export interface Database {
           created_at: string
           description: string
           id: number
-          next_event_id: number | null
-          previous_event_id: number | null
+          /*next_event_id: number | null
+          previous_event_id: number | null*/
           event_type_id: number
           publisher_id: number
           release_year: number
@@ -100,8 +100,8 @@ export interface Database {
           created_at?: string
           description: string
           id?: number
-          next_event_id?: number | null
-          previous_event_id?: number | null
+          /*next_event_id?: number | null
+          previous_event_id?: number | null*/
           event_type_id: number
           publisher_id: number
           release_year: number
@@ -112,8 +112,8 @@ export interface Database {
           created_at?: string
           description?: string
           id?: number
-          next_event_id?: number | null
-          previous_event_id?: number | null
+          /*next_event_id?: number | null
+          previous_event_id?: number | null*/
           event_type_id?: number
           publisher_id?: number
           release_year?: number
@@ -142,7 +142,7 @@ export interface Database {
           {
             foreignKeyName: "events_event_type_id_fkey"
             columns: ["event_type_id"]
-            referencedRelation: "event_types"
+            referencedRelation: "event_timeline_types"
             referencedColumns: ["id"]
           },
         ]
@@ -241,6 +241,7 @@ export interface Database {
           description: string
           id: number
           title: string
+          subtitle: string
         }
         Insert: {
           collection_id?: number | null
@@ -249,6 +250,7 @@ export interface Database {
           description: string
           id?: number
           title: string
+          subtitle: string
         }
         Update: {
           collection_id?: number | null
@@ -257,6 +259,7 @@ export interface Database {
           description?: string
           id?: number
           title?: string
+          subtitle?: string
         }
         Relationships: [
           {
@@ -324,7 +327,7 @@ export interface Database {
         }
         Relationships: []
       }
-      event_types: {
+      event_timeline_types: {
         Row: {
           created_at: string
           id: number

@@ -80,7 +80,7 @@ export default function TimelinesPage({ timeline }: TimelinePageProps) {
           <div className="min-w-0">
             {" "}
             {/* Add min-w-0 to prevent overflow */}
-            {<VisualTimeline events={filteredEvents ?? []} selectedYear={selectedYear} />}
+            {<VisualTimeline events={filteredEvents ?? []} selectedYear={selectedYear} timeline={timeline} />}
           </div>
         </div>
       </div>

@@ -29,5 +29,5 @@ export default async function Page({ params }: PageProps) {
   const issues = await getEventIssues(event.id)
   console.log("Found issues:", issues.length)
 
-  return <ReadingOrderPage event={event} issues={issues} />
+  return <ReadingOrderPage event={event} issues={issues} timeline={event.current_timeline} />
 }
