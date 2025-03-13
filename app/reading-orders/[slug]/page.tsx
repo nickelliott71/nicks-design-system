@@ -1,6 +1,5 @@
 import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from "next/navigation"
-import type { Metadata, ResolvingMetadata } from "next"
 import ReadingOrderPage from "./client-page"
 
 interface PageProps {
