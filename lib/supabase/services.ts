@@ -16,6 +16,17 @@ export async function getEvents() {
 
     if (eventsError) throw eventsError
 
+    // Fetch defualt timeline for each event
+    const { data: timeline, error: timelineError } = await supabase
+      .from("timeline_events")
+      .select(`
+        *,
+        timeline:timelines(*)
+      `)
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (timelineError) throw timelineError
+
     // Fetch main characters for each event
     const { data: eventCharacters, error: charactersError } = await supabase
       .from("event_characters")
@@ -48,6 +59,7 @@ export async function getEvents() {
       const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
       const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
       const counts = issueCounts?.find((ic) => ic.event_id === event.id)
+      const curentTimeline = timeline?.find((ic) => ic.id === event.default_timeline_id)
 
       return {
         ...event,
@@ -57,8 +69,11 @@ export async function getEvents() {
           core: counts?.core_count ?? 0,
           tie_in: counts?.tie_in_count ?? 0,
         },
+        current_timeline: curentTimeline ?? 5
       }
     })
+
+    console.log("Enriched Events:", enrichedEvents)
 
     return enrichedEvents ?? []
   } catch (error) {

@@ -36,7 +36,7 @@ export default function HomePage({ events }: HomePageProps) {
               <p className="text-muted-foreground mt-2">Check back later for new reading orders</p>
             </div>
           ) : (
-            events.map((event) => <EventCard key={event.id} event={event} variant="timeline" />)
+            events.map((event) => <EventCard key={event.id} event={event} timeline={event.default_timeline_id} />)
           )}
         </div>
       </section>

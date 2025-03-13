@@ -90,6 +90,7 @@ export interface Database {
           id: number
           /*next_event_id: number | null
           previous_event_id: number | null*/
+          default_timeline_id: number
           event_type_id: number
           publisher_id: number
           release_year: number
@@ -102,6 +103,7 @@ export interface Database {
           id?: number
           /*next_event_id?: number | null
           previous_event_id?: number | null*/
+          default_timeline_id?: number
           event_type_id: number
           publisher_id: number
           release_year: number
@@ -119,6 +121,7 @@ export interface Database {
           release_year?: number
           slug?: string
           title?: string
+          default_timeline_id: number
         }
         Relationships: [
           {

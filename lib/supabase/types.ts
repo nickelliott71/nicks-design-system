@@ -38,6 +38,7 @@ export interface Event {
   publisher_id: number
   release_year: number
   event_type_id: number | null
+  default_timeline_id: number | null
   /*previous_event_id: number | null
   next_event_id: number | null*/
   created_at: string
