@@ -1,4 +1,3 @@
-import { parse } from "path"
 import { supabase } from "./client"
 
 export async function getEvents() {
@@ -315,7 +314,7 @@ export async function getEventBySlug(slug: string, timeline: string) {
 
     console.log("Timeline Events Data from getEventsBySlug:", timelineEventsData);
 
-    /*if (timelineEventsDataError) throw timelineEventsDataError*/
+    if (timelineEventsDataError) throw timelineEventsDataError
 
     const previousEvent = timelineEventsData?.previous_event_id
       ? await supabase
