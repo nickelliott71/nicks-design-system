@@ -50,7 +50,7 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
             <Button variant={filter === "tie-in" ? "default" : "outline"} onClick={() => setFilter("tie-in")}>
               Tie-ins ({issues.filter((i) => i.type.name === "tie-in").length})
             </Button>
-            <Link href={`/reading-orders/${event.slug}/collected-editions`}>
+            <Link href={`/reading-orders/${event.slug}/collected-editions?timeline=${timeline.id}`}>
               <Button variant="ghost">
                 <Library className="mr-2 h-4 w-4" />
                 Collected Editions
