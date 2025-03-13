@@ -10,7 +10,7 @@ interface PageProps {
 
 export async function generateMetadata(
   { params, searchParams }: PageProps,
-  _parent: ResolvingMetadata
+  parent: ResolvingMetadata // eslint-disable-line @typescript-eslint/no-unused-vars
 ): Promise<Metadata> {
   const { slug } = params
   const timeline = searchParams.timeline || "5"
