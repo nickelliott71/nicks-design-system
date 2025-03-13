@@ -10,7 +10,7 @@ interface PageProps {
 
 export async function generateMetadata(
   { params, searchParams }: PageProps,
-  parent: ResolvingMetadata
+  _parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { slug } = params
   const timeline = searchParams.timeline || "5"
