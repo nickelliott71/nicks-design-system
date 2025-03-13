@@ -3,9 +3,9 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
 import "./globals.css"
-import type React from "react" // Import React
+import type React from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+/*import { Button } from "@/components/ui/button"*/
 
 const inter = Inter({ subsets: ["latin"] })
 
