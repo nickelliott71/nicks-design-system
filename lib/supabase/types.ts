@@ -39,8 +39,6 @@ export interface Event {
   release_year: number
   event_type_id: number | null
   default_timeline_id: number | null
-  /*previous_event_id: number | null
-  next_event_id: number | null*/
   created_at: string
   publisher?: Publisher
   event_type?: EventType
@@ -71,17 +69,6 @@ export interface Collection {
   release_date: string
   created_at: string
   amazon_ref: string
-  /*editions?: CollectionPurchaseOption[]*/
-}
-
-export interface CollectionPurchaseOption {
-  id: number
-  collection_id: number
-  format_id: number
-  format: Format
-  isbn: string
-  asin: string
-  created_at: string
 }
 
 export interface Issue {
@@ -93,7 +80,6 @@ export interface Issue {
   collection_id: number | null
   created_at: string
   collection?: Collection | null
-  purchase_options?: IssuePurchaseOption[]
 }
 
 export interface EventIssue {
@@ -105,15 +91,6 @@ export interface EventIssue {
   type_id: number
   type: IssueType
   importance: string
-}
-
-export interface IssuePurchaseOption {
-  id: number
-  issue_id: number
-  format_id: number
-  format: Format
-  asin: string
-  created_at: string
 }
 
 export interface Timeline {

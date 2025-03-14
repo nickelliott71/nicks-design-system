@@ -49,7 +49,7 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
                 </div>
                 <div className="mt-4">
                   {collection.amazon_ref && (
-                    <AmazonButton amazonRef={collection.amazon_ref} buttonType="small" className="w-full" /> 
+                    <AmazonButton amazonRef={collection.amazon_ref} buttonType="sm" className="w-full" /> 
                   )}
                 </div>
               </div>
