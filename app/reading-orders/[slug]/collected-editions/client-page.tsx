@@ -6,7 +6,7 @@ import { ChevronLeft } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { PurchaseButton } from "@/components/purchase-button"
+import { AmazonButton } from "@/components/amazon-button"
 import { formatDate } from "@/lib/utils"
 import type { Event, Collection } from "@/lib/supabase/types"
 
@@ -48,8 +48,8 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
                   <p className="text-sm text-muted-foreground">{collection.contents}</p>
                 </div>
                 <div className="mt-4">
-                  {collection.editions && collection.editions.length > 0 && (
-                    <PurchaseButton options={collection.editions} className="w-full" />
+                  {collection.amazon_ref && (
+                    <AmazonButton amazonRef={collection.amazon_ref} buttonType="small" className="w-full" /> 
                   )}
                 </div>
               </div>

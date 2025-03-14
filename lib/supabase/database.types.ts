@@ -3,7 +3,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      collection_purchase_options: {
+      /*collection_purchase_options: {
         Row: {
           asin: string
           collection_id: number
@@ -42,7 +42,7 @@ export interface Database {
             referencedColumns: ["id"]
           },
         ]
-      }
+      }*/
       collections: {
         Row: {
           contents: string
@@ -53,6 +53,7 @@ export interface Database {
           pages: number
           release_date: string
           title: string
+          amazon_ref: string
         }
         Insert: {
           contents: string
@@ -63,6 +64,7 @@ export interface Database {
           pages: number
           release_date: string
           title: string
+          amazon_ref: string
         }
         Update: {
           contents?: string
@@ -73,14 +75,15 @@ export interface Database {
           pages?: number
           release_date?: string
           title?: string
+          amazon_ref?: string
         }
         Relationships: [
-          {
+          /*{
             foreignKeyName: "collections_event_id_fkey"
             columns: ["event_id"]
             referencedRelation: "events"
             referencedColumns: ["id"]
-          },
+          },*/
         ]
       }
       events: {
@@ -199,7 +202,7 @@ export interface Database {
           }
         ]
       }
-      issue_purchase_options: {
+      /*issue_purchase_options: {
         Row: {
           asin: string
           created_at: string
@@ -235,7 +238,7 @@ export interface Database {
             referencedColumns: ["id"]
           },
         ]
-      }
+      }*/
       issues: {
         Row: {
           collection_id: number | null

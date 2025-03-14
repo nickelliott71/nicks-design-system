@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { PurchaseButton } from "@/components/purchase-button"
+import { AmazonButton } from "@/components/amazon-button"
 import { formatDate } from "@/lib/utils"
 import type { Event, EventIssue, Timeline } from "@/lib/supabase/types"
 
@@ -119,15 +119,18 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                         <div className="flex mt-4 border-t pt-4 items-center gap-4">
                           <span className="text-sm font-medium">Collected in:</span>
                           <Badge variant="outline">{issue.issues.collection.title}</Badge>
+                          {issue.issues.collection?.amazon_ref && (
+                            <AmazonButton buttonType="xs" amazonRef={issue.issues.collection?.amazon_ref} /> 
+                          )}
                         </div>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                      {issue.issues.purchase_options && issue.issues.purchase_options.length > 0 && (
-                        <PurchaseButton options={issue.issues.purchase_options} />
+                    {/*<div className="flex flex-col gap-2">
+                      {issue.issues.collection?.amazon_ref && (
+                        <AmazonButton amazonRef={issue.issues.collection?.amazon_ref} buttonType="small" className="w-full" /> 
                       )}
-                    </div>
+                    </div>*/}
                   </div>
                 </div>
               </div>

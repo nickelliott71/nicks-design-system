@@ -1,6 +1,4 @@
-export const AMAZON_AFFILIATE_TAG = "thlath-20"
-
-export const getAmazonUrl = (asin: string) => {
-  return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_AFFILIATE_TAG}`
+export const getAmazonUrl = (amazon_ref: string) => {
+  return `https://amzn.to/${amazon_ref}`
 }
 

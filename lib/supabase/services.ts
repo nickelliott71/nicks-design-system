@@ -1,6 +1,4 @@
-import { time } from "console";
 import { supabase } from "./client"
-import { isNull } from "util";
 
 export async function getEvents() {
   try {
@@ -374,7 +372,7 @@ export async function getEventIssues(eventId: number) {
       .from('event_issues')
       .select(`
         *,
-        issues:issues(*, collection:collections(*), purchase_options:issue_purchase_options(*, format:formats(*))),
+        issues:issues(*, collection:collections(*)), 
         type:issue_types(*)
       `)
       .eq('event_id', eventId)
@@ -407,8 +405,7 @@ export async function getEventCollections(eventId: number) {
     const { data, error, status } = await supabase
       .from("collections")
       .select(`
-        *,
-        editions:collection_purchase_options(*, format:formats(*))
+        *
       `)
       .eq("event_id", eventId)
       .order("release_date", { ascending: true })

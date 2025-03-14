@@ -70,7 +70,8 @@ export interface Collection {
   pages: number
   release_date: string
   created_at: string
-  editions?: CollectionPurchaseOption[]
+  amazon_ref: string
+  /*editions?: CollectionPurchaseOption[]*/
 }
 
 export interface CollectionPurchaseOption {
