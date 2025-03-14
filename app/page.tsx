@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Reading Orders",
-  description: "Your Ultimate Comic Reading Guide",
+  description: "Your Ultimate Comic Reading Guide for DC and Marvel Comics",
 }
 
 export default async function Page() {

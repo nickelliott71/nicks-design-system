@@ -26,6 +26,8 @@ export default function TimelinesPage({ timeline }: TimelinePageProps) {
     return matchesSearch && matchesPublisher
   })
 
+  console.log("timeline", timeline)
+
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">

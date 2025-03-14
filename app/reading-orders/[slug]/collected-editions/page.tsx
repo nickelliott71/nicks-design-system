@@ -60,6 +60,13 @@ export default function Page() {
 
       setEvent(eventData)
 
+      document.title = `${eventData.title}: Collected Editions | Reading Orders`
+
+      const metaDescription = document.querySelector('meta[name="description"]')
+      if (metaDescription) {
+        metaDescription.setAttribute("content", `Collected Editions for the ${eventData.title} event from ${eventData.publisher.name}.`)
+      }
+
       const collectionData = await getEventCollections(eventData.id)
       setCollections(collectionData)
 

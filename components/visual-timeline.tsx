@@ -17,6 +17,10 @@ export function VisualTimeline({ events, timeline, selectedYear }: VisualTimelin
     ? sortedEvents.filter((event) => event.release_year === selectedYear)
     : sortedEvents
 
+    console.log("events", events)
+    console.log("selectedYear", selectedYear)
+    console.log("timeline", timeline) 
+
   return (
     <div className="relative">
       {/* Timeline line */}

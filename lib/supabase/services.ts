@@ -159,7 +159,7 @@ export async function getEventsForTimeline() {
   }
 }
 
-export async function getEventsForSpecificTimeline(slug: string) {
+export async function getTimelineEvents(slug: string) {
   try {
     console.log("Fetching all events from Supabase for timeline...", slug)
 
@@ -238,12 +238,12 @@ export async function getEventsForSpecificTimeline(slug: string) {
       events: enrichedEvents ?? [],
     }
   } catch (error) {
-    console.error("Error in getEventsForSpecificTimeline:", error)
+    console.error("Error in getTimelineEvents:", error)
     throw error
   }
 }
 
-export async function getMetaDataForSpecificTimeline(slug: string) {
+export async function getTimeline(slug: string) {
   try {
     console.log("Fetching timeline meta by slug:", slug)
 
@@ -273,7 +273,7 @@ export async function getMetaDataForSpecificTimeline(slug: string) {
     console.log("Successfully fetched event:", data.name)
     return data
   } catch (error) {
-    console.error("Error in getMetaDataForSpecificTimeline:", error)
+    console.error("Error in getTimeline:", error)
     throw error
   }
 }
