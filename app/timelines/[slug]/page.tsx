@@ -6,6 +6,7 @@ import { getTimelineEvents, getTimeline } from "@/lib/supabase/services"
 import TimelinesPage from "./client-page"
 import { notFound } from "next/navigation"
 import { Timeline } from '@/lib/supabase/types'
+import Loading from "./loading"
 
 export default function Page() {
   const params = useParams<{ slug: string }>()
@@ -43,7 +44,7 @@ export default function Page() {
     fetchData()
   }, [slug])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <Loading />
 
   if (!timelineEvents) return notFound()
   return <TimelinesPage timeline={timelineEvents ?? []} />

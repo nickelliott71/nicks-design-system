@@ -6,6 +6,7 @@ import { getEventBySlug, getEventIssues } from "@/lib/supabase/services"
 import { notFound } from 'next/navigation'
 import ReadingOrderPage from "./client-page"
 import { Event, EventIssue } from '@/lib/supabase/types'
+import Loading from "./loading"
 
 export default function Page() {
   const params = useParams<{ slug: string }>()
@@ -43,7 +44,7 @@ export default function Page() {
     fetchData()
   }, [slug, timeline])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <Loading />
 
   if (!event || !event.current_timeline) return notFound()
   return <ReadingOrderPage event={event} issues={issues} timeline={event.current_timeline} />
