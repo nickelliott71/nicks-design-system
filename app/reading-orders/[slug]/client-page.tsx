@@ -137,6 +137,31 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
             </Card>
           ))}
         </div>
+        <div className="flex mt-6 gap-4">
+            {event.previous_event && (
+              <Link href={`/reading-orders/${event.previous_event.slug}?timeline=${timeline.id}`}>
+                <Button variant="outline" size="sm">
+                  <ChevronLeft className="mr-1 h-4 w-4" />
+                  Previous: {event.previous_event.title}
+                </Button>
+              </Link>
+            )}
+             {event.current_timeline && (
+              <Link href={`/timelines/${event.current_timeline.slug}`}>
+                <Button variant="link" size="sm">
+                  {event.current_timeline.name} timeline
+                </Button>
+              </Link>
+            )}           
+            {event.next_event && (
+              <Link href={`/reading-orders/${event.next_event.slug}?timeline=${timeline.id}`}>
+                <Button variant="outline" size="sm">
+                  Next: {event.next_event.title}
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Button>
+              </Link>
+            )}
+          </div>
       </div>
     </div>
   )
