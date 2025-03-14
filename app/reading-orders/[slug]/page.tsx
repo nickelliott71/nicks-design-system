@@ -13,7 +13,7 @@ export default function Page() {
   const searchParams = useSearchParams()
 
   const slug = params.slug
-  const timeline = searchParams.get('timeline') || '5'
+  const timeline = searchParams.get('timeline') || '999999'
 
   const [event, setEvent] = useState<Event | null>(null)
   const [issues, setIssues] = useState<EventIssue[]>([])

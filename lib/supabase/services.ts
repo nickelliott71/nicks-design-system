@@ -1,4 +1,6 @@
+import { time } from "console";
 import { supabase } from "./client"
+import { isNull } from "util";
 
 export async function getEvents() {
   try {
@@ -238,7 +240,7 @@ export async function getTimelineEvents(slug: string) {
       events: enrichedEvents ?? [],
     }
   } catch (error) {
-    console.error("Error in getTimelineEvents:", error)
+    console.error("Error in getEventsForSpecificTimeline:", error)
     throw error
   }
 }
@@ -299,8 +301,12 @@ export async function getEventBySlug(slug: string, timeline: string) {
 
     console.log("Event from getEventsBySlug:", data);
 
-    const timelineId = timeline ? parseInt(timeline, 10) : 5
-
+    const timelineId = (timeline && parseInt(timeline, 10) !== 999999)
+    ? parseInt(timeline, 10)
+    : (data.default_timeline_id)
+      ? data.default_timeline_id
+      : 5;
+    
     const { data: timelineData, error: timelineDataError } = await supabase
       .from("timelines")
       .select("*")
