@@ -5,8 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import "./globals.css"
 import type React from "react"
 import Link from "next/link"
-/*import { Button } from "@/components/ui/button"*/
-
+import { Button } from "@/components/ui/button"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -30,9 +29,9 @@ export default function RootLayout({
                   Reading Orders
                 </Link>
                 <div className="flex items-center gap-4">
-                  {/*<Link href="/timeline">
-                    <Button variant="outline">View Timelines</Button>
-                  </Link>*/}
+                  <Link href="/timelines">
+                    <Button variant="outline">View Comic Timelines</Button>
+                  </Link>
                   <ThemeToggle />
                 </div>
               </div>

@@ -5,7 +5,7 @@ export interface Publisher {
   created_at: string
 }
 
-export interface EventType {
+export interface EventTimelineType {
   id: number
   name: string
   description: string
@@ -41,7 +41,7 @@ export interface Event {
   default_timeline_id: number | null
   created_at: string
   publisher?: Publisher
-  event_type?: EventType
+  event_type?: EventTimelineType
   previous_event?: Event | null
   next_event?: Event | null
   current_timeline?: Timeline
@@ -99,7 +99,12 @@ export interface Timeline {
   name: string
   description: string
   slug: string
+  publisher?: Publisher
+  release_years?: string
   events?: Event[]
+  timeline_type_id: number | null
+  timeline_type?: EventTimelineType
+  order?: number
 }
 
 export interface TimelineEvent {

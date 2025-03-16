@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { getTimelineEvents, getTimeline } from "@/lib/supabase/services"
-import TimelinesPage from "./client-page"
+import TimelinePage from "./client-page"
 import { notFound } from "next/navigation"
 import { Timeline } from '@/lib/supabase/types'
 import Loading from "./loading"
@@ -47,5 +47,5 @@ export default function Page() {
   if (loading) return <Loading />
 
   if (!timelineEvents) return notFound()
-  return <TimelinesPage timeline={timelineEvents ?? []} />
+  return <TimelinePage timeline={timelineEvents ?? []} />
 }

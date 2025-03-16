@@ -298,6 +298,97 @@ export async function getTimeline(slug: string) {
   }
 }
 
+export async function getTimelines() {
+  try {
+    console.log("Fetching visible events from Supabase...")
+
+    const { data: timelines, error: timelinesError } = await supabase
+      .from("timelines")
+      .select(`
+        *,
+        publisher:publishers(*),
+        event_type:event_timeline_types(*)
+      `)
+      .order("order", { ascending: true })
+
+    console.log("Events from getTimelines:", timelines);
+
+    if (timelinesError) throw timelinesError
+
+    // Extract default_timeline_id as a number
+    /*const timelineIds = events?.map((e) => e.default_timeline_id) ?? []
+
+    console.log("Timeline IDs from getEvents:", timelineIds);
+
+    // Fetch default timeline for each event
+    const { data: timeline, error: timelineError } = await supabase
+      .from("timelines")
+      .select(`
+        *
+      `)
+      .in("id", timelineIds)
+
+    console.log("Timelines from getEvents:", timeline);  
+
+    if (timelineError) throw timelineError
+
+    // Fetch main characters for each event
+    const { data: eventCharacters, error: charactersError } = await supabase
+      .from("event_characters")
+      .select(`
+        event_id,
+        character:characters(*)
+      `)
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (charactersError) throw charactersError
+
+    // Fetch reading times from the view
+    const { data: readingTimes, error: readingError } = await supabase
+      .from("event_reading_time")
+      .select("*")
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (readingError) throw readingError
+
+    // Fetch issue counts from the view
+    const { data: issueCounts, error: countsError } = await supabase
+      .from("event_issue_count")
+      .select("*")
+      .in("event_id", events?.map((e) => e.id) ?? [])
+
+    if (countsError) throw countsError*/
+
+    // Combine all the data
+    const enrichedTimelines = timelines?.map((timeline) => {
+      /*const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
+      const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
+      const counts = issueCounts?.find((ic) => ic.event_id === event.id)
+      const curentTimeline = timeline?.find((ct) => ct.id === event.default_timeline_id)
+
+      console.log("Current Timeline:", curentTimeline);*/
+
+      return {
+        ...timeline,
+        /*main_characters: characters ?? [],
+        reading_time: readingTime ?? 0,
+        issue_counts: {
+          core: counts?.core_count ?? 0,
+          tie_in: counts?.tie_in_count ?? 0,
+        },
+        current_timeline: curentTimeline*/
+      }
+    })
+
+    console.log("Enriched Timelines:", enrichedTimelines)
+
+    return enrichedTimelines ?? []
+  } catch (error) {
+    console.error("Error in getTimelines:", error)
+    throw error
+  }
+}
+
 export async function getEventBySlug(slug: string, timeline: string) {
   try {
     console.log("Fetching event by slug:", slug)

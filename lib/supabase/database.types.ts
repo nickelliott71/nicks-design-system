@@ -323,6 +323,10 @@ export interface Database {
           name: string
           slug: string
           description: string
+          publisher_id: number
+          release_years: string
+          timeline_type_id: number
+          order: number
         }
         Insert: {
           created_at?: string
@@ -330,6 +334,10 @@ export interface Database {
           name: string
           slug: string
           description: string
+          publisher_id: number
+          release_years: string
+          timeline_type_id: number
+          order: number
         }
         Update: {
           created_at?: string
@@ -337,8 +345,25 @@ export interface Database {
           name?: string
           slug?: string
           description?: string
+          publisher_id?: number
+          release_years?: string
+          timeline_type_id?: number
+          order?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "timelines_publisher_id_fkey"
+            columns: ["publisher_id"]
+            referencedRelation: "publishers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timelines_timeline_type_id_fkey"
+            columns: ["timeline_type_id"]
+            referencedRelation: "event_timeline_types"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       timeline_events: {
         Row: {
