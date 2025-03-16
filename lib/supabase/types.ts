@@ -12,6 +12,12 @@ export interface EventTimelineType {
   created_at: string
 }
 
+export interface EventTimelineStatus {
+  id: number
+  status: string
+  created_at: string
+}
+
 export interface Character {
   id: number
   name: string
@@ -36,11 +42,13 @@ export interface Event {
   slug: string
   description: string
   publisher_id: number
+  status_id: number
   release_year: number
   event_type_id: number | null
   default_timeline_id: number | null
   created_at: string
   publisher?: Publisher
+  status?: EventTimelineStatus
   event_type?: EventTimelineType
   previous_event?: Event | null
   next_event?: Event | null
@@ -99,7 +107,10 @@ export interface Timeline {
   name: string
   description: string
   slug: string
+  publisher_id: number
+  status_id: number
   publisher?: Publisher
+  status?: EventTimelineStatus
   release_years?: string
   events?: Event[]
   timeline_type_id: number | null

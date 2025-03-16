@@ -23,14 +23,20 @@ export function EventCard({ event, timeline }: EventCardProps) {
         >
           <Image src="/placeholder.svg" alt={`${event.title} Cover`} fill className="object-cover" />
         </div>
-        <div className="p-4 lg:p-6 flex-1">
+        <div className="p-4 lg:p-6 flex-1 relative">
+          {/* Coming Soon Label */}
+          { event.status && event.status_id != 1 && (
+            <div className="absolute top-0 right-0 z-10 w-40 h-40 overflow-hidden">
+              <div className={`absolute top-0 right-0 transform translate-x-[20%] translate-y-[170%] rotate-45 
+                text-white text-xs font-bold py-1 w-[125%] text-center shadow-md 
+                ${event.status_id === 2 ? "bg-orange-600" : event.status_id === 3 ? "bg-gray-600" : "bg-gray-600"}`}>
+                    {event.status.status}
+              </div>
+            </div>
+          )}
           <div className="flex flex-col h-full gap-4 lg:gap-6">
             <div>
-              <h2
-                className="text-2xl lg:text-3xl font-bold tracking-tight"
-              >
-                {event.title}
-              </h2>
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">{event.title}</h2>
               <div className="mt-2 flex flex-wrap gap-2">
                 <Badge>{event.publisher?.name}</Badge>
                 <Badge variant="outline">{event.release_year}</Badge>

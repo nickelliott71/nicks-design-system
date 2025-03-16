@@ -47,6 +47,7 @@ export interface Database {
           default_timeline_id: number
           event_type_id: number
           publisher_id: number
+          status_id: number
           release_year: number
           slug: string
           title: string
@@ -58,6 +59,7 @@ export interface Database {
           default_timeline_id?: number
           event_type_id: number
           publisher_id: number
+          status_id: number
           release_year: number
           slug: string
           title: string
@@ -68,6 +70,7 @@ export interface Database {
           id?: number
           event_type_id?: number
           publisher_id?: number
+          status_id?: number
           release_year?: number
           slug?: string
           title?: string
@@ -98,6 +101,12 @@ export interface Database {
             referencedRelation: "event_timeline_types"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "events_status_id_fkey"
+            columns: ["status_id"]
+            referencedRelation: "event_timeline_statuses"
+            referencedColumns: ["id"]
+          },          
         ]
       }
       event_issues: {
@@ -324,6 +333,7 @@ export interface Database {
           slug: string
           description: string
           publisher_id: number
+          status_id: number
           release_years: string
           timeline_type_id: number
           order: number
@@ -335,6 +345,7 @@ export interface Database {
           slug: string
           description: string
           publisher_id: number
+          status_id: number
           release_years: string
           timeline_type_id: number
           order: number
@@ -346,6 +357,7 @@ export interface Database {
           slug?: string
           description?: string
           publisher_id?: number
+          status_id?: number
           release_years?: string
           timeline_type_id?: number
           order?: number
@@ -363,6 +375,12 @@ export interface Database {
             referencedRelation: "event_timeline_types"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "timelines_status_id_fkey"
+            columns: ["status_id"]
+            referencedRelation: "event_timeline_statuses"
+            referencedColumns: ["id"]
+          },   
         ]
       }
       timeline_events: {

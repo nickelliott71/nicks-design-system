@@ -10,6 +10,7 @@ export async function getEvents() {
         *,
         publisher:publishers(*),
         event_type:event_timeline_types(*),
+        status:event_timeline_statuses(*),
         default_timeline_id
       `)
       .eq("is_visible", true)
@@ -196,12 +197,13 @@ export async function getTimelineEvents(slug: string) {
         *,
         publisher:publishers(*),
         event_type:event_timeline_types(*),
+        status:event_timeline_statuses(*),
         default_timeline_id
       `)
       .order("release_year", { ascending: false })
       .in("id", eventIds)
 
-    console.log("Events from getEvents:", eventData);
+    console.log("Events from getTimelineEvents:", eventData);
 
     if (eventDataError) throw eventDataError      
 
@@ -307,7 +309,8 @@ export async function getTimelines() {
       .select(`
         *,
         publisher:publishers(*),
-        event_type:event_timeline_types(*)
+        event_type:event_timeline_types(*),
+        status:event_timeline_statuses(*)
       `)
       .order("order", { ascending: true })
 
