@@ -27,7 +27,7 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
             </Button>
           </Link>
 
-          <h1 className="mt-4 text-4xl font-bold">{event.title}: Collected Editions</h1>
+          <h1 className="mt-4 text-4xl font-bold">{event.title} <span className="text-muted-foreground">Collected Editions</span></h1>
           <p className="mt-4 text-xl text-muted-foreground">Available collected editions for the {event.title} event</p>
         </div>
 
@@ -45,7 +45,7 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
                     <Badge variant="outline">{formatDate(collection.release_date)}</Badge>
                     <Badge variant="secondary">{collection.pages} pages</Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{collection.contents}</p>
+                  <p className="text-sm text-muted-foreground">Collects: {collection.contents}</p>
                 </div>
                 <div className="mt-4">
                   {collection.amazon_ref && (

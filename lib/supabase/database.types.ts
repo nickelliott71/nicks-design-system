@@ -106,7 +106,7 @@ export interface Database {
             columns: ["status_id"]
             referencedRelation: "event_timeline_statuses"
             referencedColumns: ["id"]
-          },          
+          }          
         ]
       }
       event_issues: {
@@ -216,7 +216,25 @@ export interface Database {
         }
         Relationships: []
       }
-      formats: {
+      event_timeline_statuses: {
+        Row: {
+          created_at: string
+          id: number
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          status?: string
+        }
+        Relationships: []
+      }
+      /*formats: {
         Row: {
           created_at: string
           id: number
@@ -233,7 +251,7 @@ export interface Database {
           name?: string
         }
         Relationships: []
-      }
+      }*/
       issue_types: {
         Row: {
           created_at: string
