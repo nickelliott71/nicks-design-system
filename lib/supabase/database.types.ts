@@ -8,7 +8,6 @@ export interface Database {
           contents: string
           created_at: string
           description: string
-          event_id: number
           id: number
           pages: number
           release_date: string
@@ -19,7 +18,6 @@ export interface Database {
           contents: string
           created_at?: string
           description: string
-          event_id: number
           id?: number
           pages: number
           release_date: string
@@ -30,7 +28,6 @@ export interface Database {
           contents?: string
           created_at?: string
           description?: string
-          event_id?: number
           id?: number
           pages?: number
           release_date?: string

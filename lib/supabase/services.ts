@@ -94,72 +94,6 @@ export async function getEvents() {
   }
 }
 
-/*export async function getEventsForTimeline() {
-  try {
-    console.log("Fetching all events from Supabase for timeline...")
-
-    const { data: events, error: eventsError } = await supabase
-      .from("events")
-      .select(`
-        *,
-        publisher:publishers(*),
-        event_type:event_timeline_types(*)
-      `)
-      .order("release_year", { ascending: false })
-
-    if (eventsError) throw eventsError
-
-    // Fetch main characters for each event
-    const { data: eventCharacters, error: charactersError } = await supabase
-      .from("event_characters")
-      .select(`
-        event_id,
-        character:characters(*)
-      `)
-      .in("event_id", events?.map((e) => e.id) ?? [])
-
-    if (charactersError) throw charactersError
-
-    // Fetch reading times from the view
-    const { data: readingTimes, error: readingError } = await supabase
-      .from("event_reading_time")
-      .select("*")
-      .in("event_id", events?.map((e) => e.id) ?? [])
-
-    if (readingError) throw readingError
-
-    // Fetch issue counts from the view
-    const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_count")
-      .select("*")
-      .in("event_id", events?.map((e) => e.id) ?? [])
-
-    if (countsError) throw countsError
-
-    // Combine all the data
-    const enrichedEvents = events?.map((event) => {
-      const characters = eventCharacters?.filter((ec) => ec.event_id === event.id).map((ec) => ec.character)
-      const readingTime = readingTimes?.find((rt) => rt.event_id === event.id)?.reading_hours
-      const counts = issueCounts?.find((ic) => ic.event_id === event.id)
-
-      return {
-        ...event,
-        main_characters: characters ?? [],
-        reading_time: readingTime ?? 0,
-        issue_counts: {
-          core: counts?.core_count ?? 0,
-          tie_in: counts?.tie_in_count ?? 0,
-        },
-      }
-    })
-
-    return enrichedEvents ?? []
-  } catch (error) {
-    console.error("Error in getEventsForTimeline:", error)
-    throw error
-  }
-}*/
-
 export async function getTimelineEvents(slug: string) {
   try {
     console.log("Fetching all events from Supabase for timeline...", slug)
@@ -516,29 +450,46 @@ export async function getEventCollections(eventId: number) {
   try {
     console.log("Fetching collections for event:", eventId)
 
-    const { data, error, status } = await supabase
-      .from("collections")
+    /*const { data, error, status } = await supabase
+      .from("event_collections")
       .select(`
-        *
+        *,
+        event:events(*),
+        collection:collections(*)
       `)
-      .eq("event_id", eventId)
-      .order("release_date", { ascending: true })
+      .eq("event_id", eventId)*/
+
+      const { data, error, status } = await supabase
+      .from('event_issues')
+      .select(`
+        *,
+        issues:issues(collection:collections(*))
+      `)
+      .eq('event_id', eventId)
+      .order('order', { ascending: true });
+    
+      if (error) {
+        console.error('Error fetching data:', error);
+      } else {
+
+        console.log("Collection data:", data);
+    
+        const collections = data
+        .flatMap(eventIssue => eventIssue.issues?.collection || []) // Flatten collections
+        .filter(Boolean); // Remove null/undefined
+    
+        // Deduplicate collections using Map
+        const uniqueCollections = Array.from(
+          new Map(collections.map(col => [col.id, col])).values()
+        );       
+      
+        console.log("UniqueCollections:", uniqueCollections);
+
+        return uniqueCollections
+      }
 
     console.log("Supabase response status:", status)
 
-    if (error) {
-      console.error("Supabase error:", error)
-      throw new Error(`Failed to fetch collections for event ${eventId}: ${error.message}`)
-    }
-
-    if (!data) {
-      console.log("No collections found for event:", eventId)
-      return []
-    }
-
-    console.log("Successfully fetched collections:", data.length)
-    console.log(data);
-    return data
   } catch (error) {
     console.error("Error in getEventCollections:", error)
     throw error
