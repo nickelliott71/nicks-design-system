@@ -36,7 +36,9 @@ export default function Page() {
       }
 
       const collectionData = await getEventCollections(eventData.id)
-      setCollections(collectionData)
+      if (collectionData) {
+        setCollections(collectionData)
+      }
 
       setLoading(false)
     }
