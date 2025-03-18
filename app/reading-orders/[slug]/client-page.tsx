@@ -7,7 +7,6 @@ import { ChevronLeft, ChevronRight, Library, Info } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { AmazonButton } from "@/components/amazon-button"
 import { formatDate } from "@/lib/utils"
 import type { Event, EventIssue, Timeline } from "@/lib/supabase/types"
@@ -96,21 +95,11 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title} <span className="text-muted-foreground">{issue.issues.subtitle}</span></h3>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <Info className="h-4 w-4 text-muted-foreground" />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>{issue.importance}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
                       </div>
                       <p className="text-muted-foreground">{issue.issues.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
                         <Badge variant={issue.type.name === "essential" ? "default" : "secondary"}>
-                          {issue.type.name === "essential" ? "Essential Issue" : issue.type.name === "recommended" ? "Recommended" : "Optional"}
+                          {issue.type.name === "essential" ? "Essential" : issue.type.name === "recommended" ? "Recommended" : "Optional"}
                         </Badge>
                         <Badge variant="outline">{formatDate(issue.issues.date)}</Badge>
                       </div>

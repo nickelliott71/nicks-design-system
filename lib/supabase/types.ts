@@ -98,7 +98,6 @@ export interface EventIssue {
   issues: Issue
   type_id: number
   type: IssueType
-  importance: string
 }
 
 export interface Timeline {
