@@ -56,8 +56,9 @@ export interface Event {
   main_characters?: Character[]
   reading_time?: number
   issue_counts?: {
-    core: number
-    tie_in: number
+    essential: number
+    recommended: number
+    optional: number
   }
 }
 

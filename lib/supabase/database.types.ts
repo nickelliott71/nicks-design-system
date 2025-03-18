@@ -459,12 +459,12 @@ export interface Database {
         }
         Relationships: []
       }
-      event_issue_count: {
+      event_issue_type_count: {
         Row: {
           event_id: number
-          core_count: number
-          tie_in_count: number
-          lead_in_count: number
+          essential_count: number
+          recommended_count: number
+          optional_count: number
         }
         Relationships: []
       }

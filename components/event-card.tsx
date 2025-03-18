@@ -48,10 +48,10 @@ export function EventCard({ event, timeline }: EventCardProps) {
                   <BookOpen className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
                   <div>
                     <div className="font-semibold">
-                      {String((event.issue_counts?.core ?? 0) + (event.issue_counts?.tie_in ?? 0))} Issues
+                      {String((event.issue_counts?.essential ?? 0) + (event.issue_counts?.recommended ?? 0) + (event.issue_counts?.optional ?? 0))} Issues
                     </div>
                     <div className="text-muted-foreground">
-                      {String(event.issue_counts?.core ?? 0)} Core / {String(event.issue_counts?.tie_in ?? 0)} Tie-in
+                      {String(event.issue_counts?.essential ?? 0)} Essential 
                     </div>
                   </div>
                 </div>

@@ -12,7 +12,7 @@ import { AmazonButton } from "@/components/amazon-button"
 import { formatDate } from "@/lib/utils"
 import type { Event, EventIssue, Timeline } from "@/lib/supabase/types"
 
-type IssueType = "all" | "core" | "tie-in" | "lead-in"
+type IssueType = "all" | "essential" | "recommended" | "optional"
 
 interface ReadingOrderPageProps {
   event: Event
@@ -41,14 +41,14 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
             <Button variant={filter === "all" ? "default" : "outline"} onClick={() => setFilter("all")}>
               All Issues ({issues.length})
             </Button>
-            <Button variant={filter === "core" ? "default" : "outline"} onClick={() => setFilter("core")}>
-              Core Story ({issues.filter((i) => i.type.name === "core").length})
+            <Button variant={filter === "essential" ? "default" : "outline"} onClick={() => setFilter("essential")}>
+              Essential ({issues.filter((i) => i.type.name === "essential").length})
             </Button>
-            <Button variant={filter === "lead-in" ? "default" : "outline"} onClick={() => setFilter("lead-in")}>
-              Lead-ins ({issues.filter((i) => i.type.name === "lead-in").length})
+            <Button variant={filter === "recommended" ? "default" : "outline"} onClick={() => setFilter("recommended")}>
+              Recommended ({issues.filter((i) => i.type.name === "recommended").length})
             </Button>
-            <Button variant={filter === "tie-in" ? "default" : "outline"} onClick={() => setFilter("tie-in")}>
-              Tie-ins ({issues.filter((i) => i.type.name === "tie-in").length})
+            <Button variant={filter === "optional" ? "default" : "outline"} onClick={() => setFilter("optional")}>
+              Optional ({issues.filter((i) => i.type.name === "optional").length})
             </Button>
             <Link href={`/reading-orders/${event.slug}/collected-editions?timeline=${timeline.id}`}>
               <Button variant="ghost">
@@ -109,8 +109,8 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                       </div>
                       <p className="text-muted-foreground">{issue.issues.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        <Badge variant={issue.type.name === "core" ? "default" : "secondary"}>
-                          {issue.type.name === "core" ? "Core Issue" : issue.type.name === "tie-in" ? "Tie-in" : "Lead-in"}
+                        <Badge variant={issue.type.name === "essential" ? "default" : "secondary"}>
+                          {issue.type.name === "essential" ? "Essential Issue" : issue.type.name === "recommended" ? "Recommended" : "Optional"}
                         </Badge>
                         <Badge variant="outline">{formatDate(issue.issues.date)}</Badge>
                       </div>

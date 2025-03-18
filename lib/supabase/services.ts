@@ -58,7 +58,7 @@ export async function getEvents() {
 
     // Fetch issue counts from the view
     const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_count")
+      .from("event_issue_type_count")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 
@@ -78,8 +78,9 @@ export async function getEvents() {
         main_characters: characters ?? [],
         reading_time: readingTime ?? 0,
         issue_counts: {
-          core: counts?.core_count ?? 0,
-          tie_in: counts?.tie_in_count ?? 0,
+          essential: counts?.essential_count ?? 0,
+          recommended: counts?.recommended_count ?? 0,
+          optional: counts?.optional_count ?? 0,
         },
         current_timeline: curentTimeline
       }
@@ -164,7 +165,7 @@ export async function getTimelineEvents(slug: string) {
 
     // Fetch issue counts from the view
     const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_count")
+      .from("event_issue_type_count")
       .select("*")
       .in("event_id", eventData?.map((e) => e.id) ?? [])
 
@@ -181,8 +182,9 @@ export async function getTimelineEvents(slug: string) {
         main_characters: characters ?? [],
         reading_time: readingTime ?? 0,
         issue_counts: {
-          core: counts?.core_count ?? 0,
-          tie_in: counts?.tie_in_count ?? 0,
+          essential: counts?.essential_count ?? 0,
+          recommended: counts?.recommended_count ?? 0,
+          optional: counts?.optional_count ?? 0,
         },
       }
     })
@@ -290,7 +292,7 @@ export async function getTimelines() {
 
     // Fetch issue counts from the view
     const { data: issueCounts, error: countsError } = await supabase
-      .from("event_issue_count")
+      .from("event_issue_type_count")
       .select("*")
       .in("event_id", events?.map((e) => e.id) ?? [])
 
@@ -310,8 +312,9 @@ export async function getTimelines() {
         /*main_characters: characters ?? [],
         reading_time: readingTime ?? 0,
         issue_counts: {
-          core: counts?.core_count ?? 0,
-          tie_in: counts?.tie_in_count ?? 0,
+          essential: counts?.essential_count ?? 0,
+          recommended: counts?.recommended_count ?? 0,
+          optional: counts?.optional_count ?? 0,
         },
         current_timeline: curentTimeline*/
       }
