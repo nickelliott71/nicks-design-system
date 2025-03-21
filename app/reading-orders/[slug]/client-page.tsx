@@ -10,6 +10,8 @@ import { Card } from "@/components/ui/card"
 import { AmazonButton } from "@/components/amazon-button"
 import { formatDate } from "@/lib/utils"
 import type { Event, EventIssue, Timeline } from "@/lib/supabase/types"
+import { EBayButton } from "@/components/ebay-button"
+import { getYearFromDate } from "@/lib/constants"
 
 type IssueType = "all" | "essential" | "recommended" | "optional"
 
@@ -85,10 +87,11 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
 
         <div>
           {filteredIssues.map((issue, index) => (
-            <Card key={index} className="mb-4 overflow-hidden">
-              <div className="md:flex">
-                <div className="relative w-full md:w-[150px]">
-                  <Image src="/placeholder.svg" alt={issue.issues.title} fill className="object-cover" />
+            <Card key={index} className="mb-8 overflow-hidden">
+              <div className="flex">
+                <div className="relative justify-center w-[195px] md:w-[120px] aspect-[13/20]">
+                  {/*<Image src="/placeholder.svg" alt={issue.issues.title} fill className="object-cover" />*/}
+                  <Image src={`/images/issues/${issue.issues.id}.png`} alt={issue.issues.title}  fill className="object-cover" />
                 </div>
                 <div className="p-4 flex-1">
                   <div className="flex items-start justify-between">
@@ -105,12 +108,13 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                       </div>
 
                       {issue.issues.collection && (
-                        <div className="flex mt-4 border-t pt-4 items-center gap-4">
+                        <div className="flex flex-wrap mt-4 border-t pt-4 items-center gap-4">
                           <span className="text-sm font-medium">Collected in:</span>
-                          <Badge variant="outline">{issue.issues.collection.title}</Badge>
+                          <span className="text-sm font-medium">{issue.issues.collection.title}</span>
                           {issue.issues.collection?.amazon_ref && (
-                            <AmazonButton buttonType="xs" amazonRef={issue.issues.collection?.amazon_ref} /> 
+                            <AmazonButton amazonRef={issue.issues.collection?.amazon_ref} /> 
                           )}
+                          <EBayButton ebay_search_term={issue.issues.collection.title + " " + getYearFromDate(issue.issues.collection.release_date) + " tpb"}  />
                         </div>
                       )}
                     </div>
