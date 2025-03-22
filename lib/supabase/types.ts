@@ -88,6 +88,8 @@ export interface Issue {
   collection_id: number | null
   created_at: string
   collection?: Collection | null
+  event_id: number | null
+  event?: Event | null
 }
 
 export interface EventIssue {

@@ -110,6 +110,13 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                           {issue.type.name === "essential" ? "Essential" : issue.type.name === "recommended" ? "Recommended" : "Optional"}
                         </Badge>
                         <Badge variant="outline">{formatDate(issue.issues.date)}</Badge>
+                        {issue.issues.event_id && issue.issues.event_id != null && issue.issues.event_id != event.id && (
+                          <span className="text-sm">Part of:
+                            <Link href={`/reading-orders/${issue.issues.event?.slug}?timeline=${issue.issues.event?.default_timeline_id}`}>
+                              <Button variant="link">{issue.issues.event?.title}</Button>
+                            </Link>
+                          </span>
+                        )}
                       </div>
 
                       {issue.issues.collection && (
@@ -123,12 +130,6 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                         </div>
                       )}
                     </div>
-
-                    {/*<div className="flex flex-col gap-2">
-                      {issue.issues.collection?.amazon_ref && (
-                        <AmazonButton amazonRef={issue.issues.collection?.amazon_ref} buttonType="small" className="w-full" /> 
-                      )}
-                    </div>*/}
                   </div>
                 </div>
               </div>

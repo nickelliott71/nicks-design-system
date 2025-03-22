@@ -158,6 +158,7 @@ export interface Database {
       issues: {
         Row: {
           collection_id: number | null
+          event_id: number | null
           created_at: string
           date: string
           description: string
@@ -167,6 +168,7 @@ export interface Database {
         }
         Insert: {
           collection_id?: number | null
+          event_id?: number | null
           created_at?: string
           date: string
           description: string
@@ -176,6 +178,7 @@ export interface Database {
         }
         Update: {
           collection_id?: number | null
+          event_id?: number | null
           created_at?: string
           date?: string
           description?: string
@@ -188,6 +191,12 @@ export interface Database {
             foreignKeyName: "issues_collection_id_fkey"
             columns: ["collection_id"]
             referencedRelation: "collections"
+            referencedColumns: ["id"]
+          }, 
+          {
+            foreignKeyName: "issues_event_id_fkey"
+            columns: ["event_id"]
+            referencedRelation: "events"
             referencedColumns: ["id"]
           }
         ]
@@ -231,24 +240,6 @@ export interface Database {
         }
         Relationships: []
       }
-      /*formats: {
-        Row: {
-          created_at: string
-          id: number
-          name: string
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          name: string
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          name?: string
-        }
-        Relationships: []
-      }*/
       issue_types: {
         Row: {
           created_at: string

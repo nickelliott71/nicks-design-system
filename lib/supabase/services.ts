@@ -423,7 +423,7 @@ export async function getEventIssues(eventId: number) {
       .from('event_issues')
       .select(`
         *,
-        issues:issues(*, collection:collections(*)), 
+        issues:issues(*, collection:collections(*), event:events(*)), 
         type:issue_types(*)
       `)
       .eq('event_id', eventId)
