@@ -484,7 +484,11 @@ export async function getEventCollections(eventId: number) {
         // Deduplicate collections using Map
         const uniqueCollections = Array.from(
           new Map(collections.map(col => [col.id, col])).values()
-        );       
+        ).sort((a, b) => {
+          const dateA = new Date(a.release_date).getTime();
+          const dateB = new Date(b.release_date).getTime();
+          return dateA - dateB;
+        });
       
         console.log("UniqueCollections:", uniqueCollections);
 

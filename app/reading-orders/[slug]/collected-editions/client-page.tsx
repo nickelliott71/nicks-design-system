@@ -34,26 +34,24 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
           <p className="mt-4 text-xl text-muted-foreground">Available collected editions for the {event.title} event</p>
         </div>
 
-        {/*</div><div className="grid gap-6 md:grid-cols-2">*/}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {collections.map((collection, index) => (
-            /*<Card key={index} className="overflow-hidden">*/
             <Card key={collection.id} className="flex flex-col h-full">
-             {/*</Card><div className="relative h-[400px]">*/}
               <div className="p-4 flex-grow">
                 <div className="flex flex-col items-center mb-4">
                   <div className="relative w-[195px] aspect-[13/20] mb-4">
-                    <Image src={`/images/collections/${collection.id}.png`} alt={collection.title} fill className="object-cover" />
+                    <Image
+                      src={`/images/collections/${collection.id}.png`}
+                      alt={collection.title}
+                      fill
+                      sizes="195px"
+                      className="object-cover"
+                    />
                   </div>
-              {/*</div>
-              <div className="p-6">*/}
                   <h3 className="text-2xl font-bold">{collection.title}</h3>
-                  {/*<div className="mt-4 space-y-2">
-                    <div className="flex flex-wrap gap-2">*/}
                   <div className="flex flex-wrap justify-start gap-2 m-2">
                       <Badge variant="outline">{formatDate(collection.release_date)}</Badge>
                       <Badge variant="secondary">{collection.pages} pages</Badge>
-                      {/*<</div>*/}
                   </div>
                   <p className="mt-2 mb-4 text-muted-foreground">{collection.description}</p>
                   <p className="text-sm text-muted-foreground">Collects: {collection.contents}</p>

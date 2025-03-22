@@ -90,8 +90,13 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
             <Card key={index} className="mb-8 overflow-hidden">
               <div className="flex">
                 <div className="relative justify-center w-[195px] md:w-[120px] aspect-[13/20]">
-                  {/*<Image src="/placeholder.svg" alt={issue.issues.title} fill className="object-cover" />*/}
-                  <Image src={`/images/issues/${issue.issues.id}.png`} alt={issue.issues.title}  fill className="object-cover" />
+                  <Image
+                    src={`/images/issues/${issue.issues.id}.png`}
+                    alt={issue.issues.title}
+                    fill
+                    sizes="(min-width: 768px) 120px, 195px"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-4 flex-1">
                   <div className="flex items-start justify-between">
