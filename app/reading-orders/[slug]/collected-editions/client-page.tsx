@@ -48,7 +48,8 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
                       className="object-cover"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold">{collection.title}</h3>
+                  <h3 className="text-2xl font-bold text-center">{collection.title}</h3>
+                  <span className="text-2xl font-bold text-muted-foreground">{collection.subtitle}</span>
                   <div className="flex flex-wrap justify-start gap-2 m-2">
                       <Badge variant="outline">{formatDate(collection.release_date)}</Badge>
                       <Badge variant="secondary">{collection.pages} pages</Badge>

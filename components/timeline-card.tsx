@@ -20,7 +20,14 @@ export function TimelineCard({ timeline }: TimelineCardProps) {
         <div
           className={`relative h-[200px] lg:h-[300px] w-full lg:w-[350px] shrink-0`}
         >
-          <Image src="/placeholder.svg" alt={`${timeline.name} Cover`} fill className="object-cover" />
+          {/*<Image src="/placeholder.svg" alt={`${timeline.name} Cover`} fill className="object-cover" />*/}
+          <Image
+            src={`/images/timelines/${timeline.id}.png`}
+            alt={timeline.name}
+            fill
+            sizes="(min-width: 768px) 120px, 195px"
+            className="object-cover object-top"
+          />
         </div>
         <div className="p-4 lg:p-6 flex-1">
           <div className="flex flex-col h-full gap-4 lg:gap-6">

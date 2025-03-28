@@ -71,6 +71,7 @@ export interface EventCharacter {
 export interface Collection {
   id: number
   title: string
+  subtitle: string
   description: string
   contents: string
   pages: number

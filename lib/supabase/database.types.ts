@@ -12,6 +12,7 @@ export interface Database {
           pages: number
           release_date: string
           title: string
+          subtitle: string
           amazon_ref: string
         }
         Insert: {
@@ -22,6 +23,7 @@ export interface Database {
           pages: number
           release_date: string
           title: string
+          subtitle: string
           amazon_ref: string
         }
         Update: {
@@ -32,6 +34,7 @@ export interface Database {
           pages?: number
           release_date?: string
           title?: string
+          subtitle?: string
           amazon_ref?: string
         }
         Relationships: []

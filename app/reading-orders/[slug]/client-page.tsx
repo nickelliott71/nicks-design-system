@@ -68,7 +68,7 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
               </Link>
             )}
              {event.current_timeline && (
-              <Link href={`/timelines/${event.current_timeline.slug}`}>
+              <Link href={`/timeline/${event.current_timeline.slug}`}>
                 <Button variant="link" size="sm">
                   {event.current_timeline.name} timeline
                 </Button>
@@ -102,7 +102,7 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title} <span className="text-muted-foreground">{issue.issues.subtitle}</span></h3>
+                        <h3 className="text-xl font-semibold">{issue.order} - {issue.issues.title} <br/><span className="text-muted-foreground">{issue.issues.subtitle}</span></h3>
                       </div>
                       <p className="text-muted-foreground">{issue.issues.description}</p>
                       <div className="mt-2 flex flex-wrap gap-2">
@@ -122,7 +122,11 @@ export default function ReadingOrderPage({ event, issues, timeline }: ReadingOrd
                       {issue.issues.collection && (
                         <div className="flex flex-wrap mt-4 border-t pt-4 items-center gap-4">
                           <span className="text-sm font-medium">Collected in:</span>
-                          <span className="text-sm font-medium">{issue.issues.collection.title}</span>
+                          <span className="text-sm font-medium">{issue.issues.collection.title}
+                            {issue.issues.collection.subtitle && (
+                              <span>: {issue.issues.collection.subtitle}</span>
+                            )}
+                          </span>
                           {issue.issues.collection?.amazon_ref && (
                             <AmazonButton amazonRef={issue.issues.collection?.amazon_ref} /> 
                           )}
