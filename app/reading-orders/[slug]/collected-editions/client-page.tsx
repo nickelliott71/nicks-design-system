@@ -11,13 +11,16 @@ import { formatDate } from "@/lib/utils"
 import type { Event, Collection } from "@/lib/supabase/types"
 import { EBayButton } from "@/components/ebay-button"
 import { getYearFromDate } from "@/lib/constants"
+import { CollectedEditionsGrid } from "@/components/collected-editions-grid"
 
 interface CollectedEditionsPageProps {
   event: Event
-  collections: Collection[]
+  essential: Collection[]
+  recommended: Collection[]
+  optional: Collection[]
 }
 
-export default function CollectedEditionsPage({ event, collections }: CollectedEditionsPageProps) {
+export default function CollectedEditionsPage({ event, essential, recommended, optional }: CollectedEditionsPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
@@ -34,41 +37,24 @@ export default function CollectedEditionsPage({ event, collections }: CollectedE
           <p className="mt-4 text-xl text-muted-foreground">Available collected editions for the {event.title} event</p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {collections.map((collection, index) => (
-            <Card key={collection.id} className="flex flex-col h-full">
-              <div className="p-4 flex-grow">
-                <div className="flex flex-col items-center mb-4">
-                  <div className="relative w-[195px] aspect-[13/20] mb-4">
-                    <Image
-                      src={`/images/collections/${collection.id}.png`}
-                      alt={collection.title}
-                      fill
-                      sizes="195px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <h3 className="text-2xl font-bold text-center">{collection.title}</h3>
-                  <span className="text-2xl font-bold text-muted-foreground">{collection.subtitle}</span>
-                  <div className="flex flex-wrap justify-start gap-2 m-2">
-                      <Badge variant="outline">{formatDate(collection.release_date)}</Badge>
-                      <Badge variant="secondary">{collection.pages} pages</Badge>
-                  </div>
-                  <p className="mt-2 mb-4 text-muted-foreground">{collection.description}</p>
-                  <p className="text-sm text-muted-foreground">Collects: {collection.contents}</p>
-                </div>
 
+        <h2 className="mt-8 mb-4 text-3xl font-bold">Essential <span className="text-muted-foreground">Collected Editions</span></h2>
+        <CollectedEditionsGrid collections={essential} />
 
-                <div className="flex justify-center mt-4 gap-4" >
-                  {collection.amazon_ref && (
-                    <AmazonButton amazonRef={collection.amazon_ref} buttonType="sm" /*className="w-full"*/ /> 
-                  )}
-                    <EBayButton ebay_search_term={collection.title + " " + getYearFromDate(collection.release_date) + " tpb"}  />
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {recommended.length > 0 && (
+          <>
+            <h2 className="mt-8 mb-4 text-3xl font-bold">Recommended <span className="text-muted-foreground">Collected Editions</span></h2>
+            <CollectedEditionsGrid collections={recommended} />
+          </>
+        )}
+
+        {optional.length > 0 && (
+          <>
+            <h2 className="mt-8 mb-4 text-3xl font-bold">Optional <span className="text-muted-foreground">Collected Editions</span></h2>
+            <CollectedEditionsGrid collections={optional} />
+          </>
+        )}
+
       </div>
     </div>
   )

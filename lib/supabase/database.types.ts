@@ -261,26 +261,39 @@ export interface Database {
         }
         Relationships: []
       }
-      event_timeline_types: {
+      event_collections: {
         Row: {
           created_at: string
           id: number
-          name: string
-          description: string
+          event_id: number
+          essential: number [] | []
+          recommended: number [] | []
+          optional: number [] | []
         }
         Insert: {
           created_at?: string
           id?: number
-          name: string
-          description: string
+          event_id: number
+          essential?: number [] | []
+          recommended?: number [] | []
+          optional?: number [] | []
         }
         Update: {
           created_at?: string
           id?: number
-          name?: string
-          description?: string
+          event_id?: number
+          essential?: number [] | []
+          recommended?: number [] | []
+          optional?: number [] | []
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "event_collections_events_id_fkey"
+            columns: ["event_id"]
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       characters: {
         Row: {

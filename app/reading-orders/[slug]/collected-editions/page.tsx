@@ -16,7 +16,9 @@ export default function Page() {
   const timeline = searchParams.get('timeline') || '5'
 
   const [event, setEvent] = useState<Event | null>(null)
-  const [collections, setCollections] = useState<Collection[]>([])
+  const [essentialcollections, setEssentialCollections] = useState<Collection[]>([])
+  const [recommendedcollections, setRecommendedCollections] = useState<Collection[]>([])
+  const [optionalcollections, setOptionalCollections] = useState<Collection[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -37,7 +39,9 @@ export default function Page() {
 
       const collectionData = await getEventCollections(eventData.id)
       if (collectionData) {
-        setCollections(collectionData)
+        setEssentialCollections(collectionData.essential || [])
+        setRecommendedCollections(collectionData.recommended || [])
+        setOptionalCollections(collectionData.optional || [])
       }
 
       setLoading(false)
@@ -48,6 +52,6 @@ export default function Page() {
 
   if (loading) return <Loading />
 
-  if (!event || !collections) return notFound()
-  return <CollectedEditionsPage event={event} collections={collections} />
+  if (!event) return notFound()
+  return <CollectedEditionsPage event={event} essential={essentialcollections} recommended={recommendedcollections} optional={optionalcollections} />
 }
