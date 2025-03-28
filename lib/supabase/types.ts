@@ -62,19 +62,20 @@ export interface Event {
   }
 }
 
-export interface EventCharacter {
+export interface EventCollection {
   id: number
-  essential: number[];
-  recommended: number[];
-  optional: number[];
-  event_id: number | null;
+  essential: number[]
+  recommended: number[]
+  optional: number[]
+  event_id: number | null
   created_at: string
 }
 
-export interface EventCollection {
+export interface EventCharacter {
   id: number
   event_id: number
   character_id: number
+  created_at: string
 }
 
 export interface Collection {

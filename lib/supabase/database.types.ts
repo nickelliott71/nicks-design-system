@@ -261,6 +261,27 @@ export interface Database {
         }
         Relationships: []
       }
+      event_timeline_types: {
+        Row: {
+          created_at: string
+           id: number
+           name: string
+           description: string
+        }
+        Insert: {
+          created_at?: string
+           id?: number
+           name: string
+           description: string
+        }
+        Update: {
+          created_at?: string
+           id?: number
+           name?: string
+           description?: string
+        }
+        Relationships: []
+      }
       event_collections: {
         Row: {
           created_at: string
