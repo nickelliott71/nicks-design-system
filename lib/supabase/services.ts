@@ -470,8 +470,13 @@ export async function getEventCollections(eventId: number) {
         .eq('event_id', eventId);*/
 
       if (error) {
-        console.error('Error fetching collections:', error);
-        return [];
+        console.error("Error fetching collections:", error);
+        return { essential: [], recommended: [], optional: [] }; // Return empty arrays on error
+      }
+      
+      if (!data) {
+        console.log("No collections found for event:", eventId);
+        return { essential: [], recommended: [], optional: [] }; // Return empty arrays if no data
       }
 
       // Filter collections by issue_type_id, extract the collection information, and sort by release_date
@@ -571,8 +576,8 @@ export async function getEventCollections(eventId: number) {
     console.log("Supabase response status:", status)
 
   } catch (error) {
-    console.error("Error in getEventCollections:", error)
-    throw error
+    console.error("Error in getEventCollections:", error);
+    return { essential: [], recommended: [], optional: [] }
   }
 }
 
