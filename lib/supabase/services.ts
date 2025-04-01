@@ -453,24 +453,46 @@ export async function getEventCollections(eventId: number) {
   try {
     console.log("Fetching collections for event:", eventId)
 
-    /*const { data, error, status } = await supabase
+    const { data, error, status } = await supabase
       .from("event_collections")
       .select(`
         *,
-        event:events(*),
+        issue_type_id,
         collection:collections(*)
       `)
-      .eq("event_id", eventId)*/
+      .eq("event_id", eventId)
 
-      const { data, error } = await supabase
+      console.log("Supabase event collection data:", data)
+
+      /*const { data, error } = await supabase
         .from('event_collections')
         .select('*')
-        .eq('event_id', eventId);
+        .eq('event_id', eventId);*/
 
-      /*if (error) {
+      if (error) {
         console.error('Error fetching collections:', error);
         return [];
       }
+
+      // Filter collections by issue_type_id, extract the collection information, and sort by release_date
+      const essentialCollections = data
+        .filter((item) => item.issue_type_id === 1)
+        .map((item) => item.collection)
+        .sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+
+      const recommendedCollections = data
+        .filter((item) => item.issue_type_id === 2)
+        .map((item) => item.collection)
+        .sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+
+      const optionalCollections = data
+        .filter((item) => item.issue_type_id === 3)
+        .map((item) => item.collection)
+        .sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+
+      console.log("Essential Collections:", essentialCollections);
+      console.log("Recommended Collections:", recommendedCollections);
+      console.log("Optional Collections:", optionalCollections);
 
       /*const { data, error, status } = await supabase
       .from('event_issues')
@@ -481,7 +503,7 @@ export async function getEventCollections(eventId: number) {
       .eq('event_id', eventId)
       .order('order', { ascending: true });*/
     
-      if (error) {
+      /*if (error) {
         console.error('Error fetching event collections:', error);
       } else {
 
@@ -500,9 +522,9 @@ export async function getEventCollections(eventId: number) {
       
       if (collectionsError) {
         console.error("Error fetching collections:", collectionsError)
-      }
+      }*/
       
-      const eventCollection = data[0] // assuming only one row per event
+      /*const eventCollection = data[0] // assuming only one row per event
 
       const essentialCollections = (collectionsData?.filter(c =>
         (eventCollection.essential as number[]).includes(c.id)
@@ -518,7 +540,7 @@ export async function getEventCollections(eventId: number) {
       
       console.log("Essential Collections:", essentialCollections);
       console.log("Recommended Collections:", recommendedCollections);
-      console.log("Optional Collections:", optionalCollections);
+      console.log("Optional Collections:", optionalCollections);*/
 
       return {
         essential: essentialCollections,
@@ -544,7 +566,7 @@ export async function getEventCollections(eventId: number) {
         console.log("UniqueCollections:", uniqueCollections);
 
         return uniqueCollections*/
-      }
+      /*}*/
 
     console.log("Supabase response status:", status)
 

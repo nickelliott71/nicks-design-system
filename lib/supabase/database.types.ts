@@ -287,31 +287,40 @@ export interface Database {
           created_at: string
           id: number
           event_id: number
-          essential: number [] | []
-          recommended: number [] | []
-          optional: number [] | []
+          issue_type_id: number
+          collection_id: number
         }
         Insert: {
           created_at?: string
           id?: number
           event_id: number
-          essential?: number [] | []
-          recommended?: number [] | []
-          optional?: number [] | []
+          issue_type_id: number
+          collection_id: number
         }
         Update: {
           created_at?: string
           id?: number
           event_id?: number
-          essential?: number [] | []
-          recommended?: number [] | []
-          optional?: number [] | []
+          issue_type_id?: number
+          collection_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "event_collections_events_id_fkey"
+            foreignKeyName: "event_collections_event_id_fkey"
             columns: ["event_id"]
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_collections_issue_type_id_fkey"
+            columns: ["issue_type_id"]
+            referencedRelation: "issue_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_collections_collection_id_fkey"
+            columns: ["collection_id"]
+            referencedRelation: "collections"
             referencedColumns: ["id"]
           },
         ]
