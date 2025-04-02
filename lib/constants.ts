@@ -5,8 +5,7 @@ export const getAmazonUrl = (amazon_ref: string) => {
 export const getEbayUrl = (ebay_search_term: string) => {
   const encodedSearchTerm = encodeURIComponent(ebay_search_term);
   const campaignId = "5339104951"; 
-  /*return `https://rover.ebay.com/rover/1/${campaignId}/4?mpre=https://www.ebay.com/sch/i.html?_nkw=${encodedSearchTerm}`*/
-  return `https://www.ebay.com/sch/i.html?_nkw=${encodedSearchTerm}&campid=${campaignId}`
+  return `https://www.ebay.com/sch/i.html?_nkw=${encodedSearchTerm}&campid=${campaignId}&mkcid=1&mkrid=711-53200-19255-0&siteid=0&customid=&toolid=10001&mkevt=1`
 }
 
 

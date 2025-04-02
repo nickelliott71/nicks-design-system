@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ThemeToggle } from "@/components/theme-toggle"
+/*import { ThemeToggle } from "@/components/theme-toggle"*/
 import "./globals.css"
 import type React from "react"
 import Link from "next/link"
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <div className="min-h-screen bg-background text-foreground">
             <header className="border-b">
               <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -32,7 +32,7 @@ export default function RootLayout({
                   <Link href="/timelines">
                     <Button variant="outline">View Comic Timelines</Button>
                   </Link>
-                  <ThemeToggle />
+                  {/*<ThemeToggle />*/}
                 </div>
               </div>
             </header>
